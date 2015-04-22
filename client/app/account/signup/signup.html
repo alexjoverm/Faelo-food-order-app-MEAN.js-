@@ -4,8 +4,34 @@
   <div class="row">
     <div class="col-sm-12">
       <h1>Sign up</h1>
+
+      <p>Sign up now and you're name will be remembered for the orders. Also you could access to an order record.</p>
+
     </div>
+
     <div class="col-sm-12">
+
+      <h3>Connect with </h3>
+
+      <div class="text-center">
+        <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
+          <i class="fa fa-facebook"></i> Facebook
+        </a>
+        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
+          <i class="fa fa-google-plus"></i> Google+
+        </a>
+        <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
+          <i class="fa fa-twitter"></i> Twitter
+        </a>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="col-sm-12">
+
+      <h3>Or fill in this form</h3>
+
       <form class="form" name="form" ng-submit="register(form)" novalidate>
 
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
@@ -42,12 +68,12 @@
           <label>Password</label>
 
           <input type="password" name="password" class="form-control" ng-model="user.password"
-                 ng-minlength="3"
+                 ng-minlength="6"
                  required
                  mongoose-error/>
           <p class="help-block"
              ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted">
-            Password must be at least 3 characters.
+            Password must be at least 6 characters.
           </p>
           <p class="help-block" ng-show="form.password.$error.mongoose">
             {{ errors.password }}
@@ -63,20 +89,9 @@
           </a>
         </div>
 
-        <hr>
-        <div>
-          <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-            <i class="fa fa-facebook"></i> Connect with Facebook
-          </a>
-          <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
-            <i class="fa fa-google-plus"></i> Connect with Google+
-          </a>
-          <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
-            <i class="fa fa-twitter"></i> Connect with Twitter
-          </a>
-        </div>
+
+
       </form>
     </div>
   </div>
-  <hr>
 </div>

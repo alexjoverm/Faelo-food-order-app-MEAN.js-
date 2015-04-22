@@ -1,0 +1,44 @@
+
+@cl-navbar: @cl-main;
+@cl-navbar-highlight: darken(@cl-navbar, 8%);
+
+.navbar-default{
+
+  background: @cl-navbar;
+  border-bottom: 1px solid @cl-navbar-highlight;
+
+  .navbar-brand{
+    font-family: restaurant, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 38px;
+    line-height: 0.7;
+    color: white;
+
+    &:hover, &:focus{ color: #fff; }
+    i{
+      font-size: 0.8em;
+      display: inline-block;
+      margin-right: 10px;
+      position: relative;
+      top: -5px;
+    }
+  }
+
+  .navbar-toggle{
+    .icon-bar{ background-color: white; }
+    &:focus, &:hover{ background: @cl-navbar-highlight; }
+  }
+
+  .navbar-nav > li{
+    margin-left: 1px;
+    > a{
+      color: #e5e5e5;
+    }
+
+    &.active > a, &.active > a:hover, &.active > a:focus, & > a:hover, & > a:focus{
+        background: @cl-navbar-highlight;
+        color: #fff;
+    }
+  }
+
+
+}
