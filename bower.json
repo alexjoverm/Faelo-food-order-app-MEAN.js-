@@ -1,7 +1,7 @@
 {
   "name": "faelo",
   "version": "0.0.0",
-  "dependencies": {
+  "dependencies": { 
     "angular": ">=1.2.*",
     "json3": "~3.3.1",
     "es5-shim": "~3.0.1",
