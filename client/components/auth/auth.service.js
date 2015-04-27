@@ -136,6 +136,10 @@ angular.module('faeloApp')
         return currentUser.role === 'admin';
       },
 
+      isManager: function() {
+        return currentUser.role === 'manager';
+      },
+
       /**
        * Get auth token
        */

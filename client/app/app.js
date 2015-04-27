@@ -46,8 +46,13 @@ angular.module('faeloApp', [
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
-        if (next.authenticate && !loggedIn) {
+        if (next.authenticate && !loggedIn || next.role && next.role !== Auth.getCurrentUser().role) {
           $location.path('/login');
+        }
+
+        // Redirects to main page If route requires to don't be logged in and the user is
+        if (next.authenticate === false && loggedIn) {
+          $location.path('/');
         }
       });
     });

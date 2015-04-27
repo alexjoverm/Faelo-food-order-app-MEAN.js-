@@ -1,1 +1,41 @@
-.trash { color:rgb(209, 91, 71); }
+
+.provider{
+  .fa;
+  color: white;
+  width: 30px;
+  height : 30px;
+  font-size: 18px;
+  border-radius: 200px;
+
+  &:before{
+    position: absolute;
+    top: 22%; left: 25%;
+  }
+
+  &.local{
+    background: #666;
+    &:before{ content: @fa-var-database; }
+  }
+  &.google{
+    background: @btnGooglePlusBackground;
+    &:before{ content: @fa-var-google-plus; }
+  }
+  &.facebook{
+    background: @btnFacebookBackground;
+    left: 27.5%;
+    &:before{ content: @fa-var-facebook; }
+  }
+  &.twitter{
+    background: @btnTwitterBackground;
+    &:before{ content: @fa-var-twitter; }
+  }
+}
+
+table.users{
+  img{
+    max-width: 45px;
+    border-radius: 200px;
+  }
+
+  td{ vertical-align: middle !important; }
+}

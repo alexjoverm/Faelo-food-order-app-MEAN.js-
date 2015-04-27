@@ -20,6 +20,7 @@ exports.index = function(req, res) {
   });
 };
 
+
 /**
  * Creates a new user
  */

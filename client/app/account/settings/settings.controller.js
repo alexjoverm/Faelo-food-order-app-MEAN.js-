@@ -18,4 +18,6 @@ angular.module('faeloApp')
         });
       }
 		};
+
+    console.log(Auth.getCurrentUser());
   });
