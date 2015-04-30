@@ -59,6 +59,10 @@ angular.module('faeloApp')
           _.remove(array, {_id: item._id});
           cb(event, item, array);
         });
+
+        socket.on(modelName + ':error', function (item) {
+          console.log('ERRORRRRR');
+        });
       },
 
       /**

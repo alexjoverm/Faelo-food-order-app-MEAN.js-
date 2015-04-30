@@ -1,7 +1,7 @@
 {
   "name": "faelo",
   "version": "0.0.0",
-  "dependencies": { 
+  "dependencies": {
     "angular": ">=1.2.*",
     "json3": "~3.3.1",
     "es5-shim": "~3.0.1",
@@ -14,7 +14,8 @@
     "font-awesome": ">=4.1.0",
     "lodash": "~2.4.1",
     "angular-socket-io": "~0.6.0",
-    "angular-ui-router": "~0.2.10"
+    "angular-ui-router": "~0.2.10",
+    "angular-ui-calendar": "~0.8.1"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

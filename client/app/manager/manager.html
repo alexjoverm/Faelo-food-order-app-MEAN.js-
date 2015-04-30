@@ -1,3 +1,23 @@
-<div class="col-md-12">
-This is the manager view.
+
+
+<div class="col-sm-12">
+  <section class="calendar col-sm-7">
+    <div ui-calendar="config.calendar" ng-model="calendarArticles"></div>
+  </section>
+
+
+
+  <section class="col-sm-5">
+    <div class="col-sm-12">
+      <a class="btn btn-primary" href="" ng-click="OpenArticleModal({}, 'add')"><i class="fa fa-plus"></i> Add menu</a>
+    </div>
+
+    <div ng-repeat="article in articles">
+      <img src="{{article.image}}" alt=""/>
+      <h4 class="title">{{article.title}}</h4>
+      <p class="price">{{article.price}} €</p>
+      <a class="btn button-light" href="" ng-click="OpenArticleModal(article, 'update')"><i class="fa fa-pencil"></i></a>
+    </div>
+  </section>
 </div>
+

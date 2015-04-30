@@ -4,9 +4,10 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  image: String,
+  title: String,
+  description: String,
+  price: {type: Number}
 });
 
 module.exports = mongoose.model('Article', ArticleSchema);

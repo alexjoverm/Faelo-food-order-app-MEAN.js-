@@ -68,6 +68,9 @@ angular.module('faeloApp')
             }, 'modal-danger');
 
             deleteModal.result.then(function(event) {
+
+              console.log(event);
+              console.log(args);
               del.apply(event, args);
             });
           };

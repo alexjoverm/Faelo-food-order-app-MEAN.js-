@@ -1,0 +1,51 @@
+@cl-blue   : #428bca;
+@cl-brown  : #b55f32;
+@cl-green  : #5cb85c;
+@cl-orange : #ff8000;
+@cl-purple : #8351d1;
+@cl-red    : #d2322d;
+@cl-yellow : #f8f75e;
+@cl-pink   : #da3b8a;
+
+.modal-content{ overflow: hidden; }
+
+.modal-footer .text-center{
+  margin: 0;
+}
+
+.mymodal-content{
+  text-align: left;
+  li{ list-style: none; }
+  a{ font-size: 1.2em; }
+}
+
+.button-modal-close{
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 18px;
+}
+
+.modal-header.error{
+  background: @cl-red;
+  & *{ color: white; }
+}
+
+.modal-header.warning{
+  background: @cl-orange;
+  & *{ color: white; }
+}
+
+.modal-header.success{
+  background: @cl-green;
+  & *{ color: white; }
+}
+
+.modal-header.info{
+  background: @cl-blue;
+  & *{ color: white; }
+}
+
+.modal-header,.modal-footer{
+  padding: 8px 15px;
+}
