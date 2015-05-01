@@ -8,14 +8,25 @@
 
 <div class="modal-body">
   <form name="itemForm" ng-submit="submit(itemForm)" novalidate>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error' : itemForm.title.$invalid && !itemForm.title.$pristine }">
       <label>Title</label>
-      <input type="text" name="title" ng-model="data.item.title" />
+      <input class="form-control" type="text" name="title" ng-model="data.item.title" />
       <p ng-show="itemForm.title.$invalid && !itemForm.title.$pristine" class="help-block">Title required.</p>
     </div>
 
-    <textarea type="text" ng-model="data.item.description"></textarea><br />
-    <input type="text" ng-model="data.item.price" /><br />
+    <div class="form-group" ng-class="{ 'has-error' : itemForm.description.$invalid && !itemForm.description.$pristine }">
+      <label>Description</label>
+      <textarea class="form-control" type="text" name="description" ng-model="data.item.description"></textarea>
+      <p ng-show="itemForm.description.$invalid && !itemForm.description.$pristine" class="help-block">Description required.</p>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : itemForm.description.$invalid && !itemForm.description.$pristine }">
+      <label>Price (€)</label>
+      <input class="form-control" type="text" name="price" ng-model="data.item.price" />
+      <p ng-show="itemForm.description.$invalid && !itemForm.description.$pristine" class="help-block">Description required.</p>
+    </div>
+
+
 
     <p class="text-center">
       <button class="btn btn-default" ng-disabled="itemForm.$invalid" type="submit">

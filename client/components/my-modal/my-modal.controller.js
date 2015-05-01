@@ -6,8 +6,12 @@ angular.module('faeloApp')
     $scope.data = data;
 
     $scope.submit = function(form){
+      $scope.submitted = true;
 
-    }
+      if(form.$valid) {
+        $modalInstance.close($scope.data);
+      }
+    };
 
 
   }]);
