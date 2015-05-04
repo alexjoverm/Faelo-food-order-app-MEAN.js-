@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Article = require('./article.model');
+var DateModel = require('../date/date.model');
 
 // Get list of articles
 exports.index = function(req, res) {
@@ -37,6 +38,10 @@ exports.update = function(req, res) {
     var updated = _.merge(article, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
+
+
+      // IF article.image !== updated.image, THEM REMOVE IMAGE FROM DISK
+
       return res.json(200, article);
     });
   });
@@ -47,9 +52,19 @@ exports.destroy = function(req, res) {
   Article.findById(req.params.id, function (err, article) {
     if(err) { return handleError(res, err); }
     if(!article) { return res.send(404); }
-    article.remove(function(err) {
+
+    // Remove dates where the article is assigned
+    DateModel.find({_article: article._id}).remove(function(err, many) {
       if(err) { return handleError(res, err); }
-      return res.send(204);
+      console.log(many + ' removed');
+      article.remove(function(err) {
+        if(err) { return handleError(res, err); }
+
+        // REMOVE IMAGE FROM DISK
+
+
+        return res.send(204);
+      });
     });
   });
 };

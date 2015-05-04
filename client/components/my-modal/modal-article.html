@@ -10,20 +10,20 @@
   <form name="itemForm" ng-submit="submit(itemForm)" novalidate>
     <div class="form-group" ng-class="{ 'has-error' : itemForm.title.$invalid && !itemForm.title.$pristine }">
       <label>Title</label>
-      <input class="form-control" type="text" name="title" ng-model="data.item.title" />
+      <input class="form-control" type="text" name="title" ng-model="data.item.title" required/>
       <p ng-show="itemForm.title.$invalid && !itemForm.title.$pristine" class="help-block">Title required.</p>
     </div>
 
     <div class="form-group" ng-class="{ 'has-error' : itemForm.description.$invalid && !itemForm.description.$pristine }">
       <label>Description</label>
-      <textarea class="form-control" type="text" name="description" ng-model="data.item.description"></textarea>
+      <textarea class="form-control" type="text" name="description" ng-model="data.item.description" required></textarea>
       <p ng-show="itemForm.description.$invalid && !itemForm.description.$pristine" class="help-block">Description required.</p>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error' : itemForm.description.$invalid && !itemForm.description.$pristine }">
+    <div class="form-group" ng-class="{ 'has-error' : itemForm.price.$invalid && !itemForm.price.$pristine }">
       <label>Price (€)</label>
-      <input class="form-control" type="text" name="price" ng-model="data.item.price" />
-      <p ng-show="itemForm.description.$invalid && !itemForm.description.$pristine" class="help-block">Description required.</p>
+      <input class="form-control" type="text" name="price" ng-model="data.item.price" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required/>
+      <p ng-show="itemForm.price.$invalid && !itemForm.price.$pristine" class="help-block">Enter price like 89.89 € (2 decimals max, point as a decimal separator)</p>
     </div>
 
 
@@ -32,6 +32,8 @@
       <button class="btn btn-default" ng-disabled="itemForm.$invalid" type="submit">
         OK
       </button>
+
+      <button ng-show="data.options.mode==='update'" class="btn btn-danger" ng-click="data.options.mode='delete'; $close(data);">Delete</button>
     </p>
   </form>
 </div>

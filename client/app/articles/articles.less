@@ -1,0 +1,63 @@
+
+.article-card{
+
+  display: inline-block;
+  float: left;
+  position: relative;
+  width: 48%;
+  max-width: 400px;
+  height: 120px;
+  overflow: hidden;
+  box-shadow: 1px 1px 5px #ccc;
+
+  &.selected{
+    border: 4px solid #ed9c28;
+  }
+
+  &:nth-child(odd){
+    margin-left: 4%;
+  }
+
+  img{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+
+  .price{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 0;
+    font-weight: bold;
+    z-index: 5;
+    color: white;
+    text-shadow: 0 0 5px #000;
+  }
+
+  .caption{
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%;
+    height: 35px;
+    padding: 0 10px;
+    background: rgba(255, 255, 255, 0.8);
+
+    .title{
+      display: block;
+      margin: 0;
+      padding: 8px 0;
+      font-weight: 500;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+
+  }
+
+}

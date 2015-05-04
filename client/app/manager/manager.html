@@ -2,21 +2,30 @@
 
 <div class="col-sm-12">
   <section class="calendar col-sm-7">
-    <div ui-calendar="config.calendar" ng-model="calendarArticles"></div>
+    <div ui-calendar="config.calendar" ng-model="dates" calendar="myCalendar"></div>
   </section>
 
 
 
-  <section class="col-sm-5">
-    <div class="col-sm-12">
-      <a class="btn btn-primary" href="" ng-click="OpenArticleModal({}, 'add')"><i class="fa fa-plus"></i> Add menu</a>
-    </div>
+  <section class="articles-container col-sm-5">
+    <p class="controls">
+      <a class="btn btn-primary" href="" ng-click="OpenArticleModal({}, 'add')"><i class="fa fa-plus"></i> New</a>
+      <a class="btn btn-warning" ng-class="{'active': config.mode == 'select'}" href="" ng-click="changeMode('select')"><i class="glyphicon glyphicon-screenshot"></i></a>
+      <a class="btn btn-danger" ng-class="{'active': config.mode == 'delete'}" href="" ng-click="changeMode('delete')"><i class="glyphicon glyphicon-trash"></i></a>
 
-    <div ng-repeat="article in articles">
+      <span class="pull-right">
+        <a class="btn btn-default" ng-class="{'active': config.modeButton == 1}" href="" ng-click="changeModeButton(1)">Month</a>
+      </span>
+    </p>
+
+    <div class="article-card" ng-repeat="article in articles | orderBy:'-'" ng-class="{'selected': article.selected}" ng-click="setSelected(article)">
       <img src="{{article.image}}" alt=""/>
-      <h4 class="title">{{article.title}}</h4>
       <p class="price">{{article.price}} €</p>
-      <a class="btn button-light" href="" ng-click="OpenArticleModal(article, 'update')"><i class="fa fa-pencil"></i></a>
+      <div class="caption">
+        <h4 class="title">{{article.title}}</h4>
+      </div>
+
+      <a class="btn btn-edit-card" href="" ng-click="OpenArticleModal(article, 'update')"><i class="fa fa-pencil"></i></a>
     </div>
   </section>
 </div>

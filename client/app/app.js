@@ -43,6 +43,8 @@ angular.module('faeloApp', [
     };
   })
 
+
+
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {
@@ -57,4 +59,10 @@ angular.module('faeloApp', [
         }
       });
     });
+  })
+
+  .filter('unsafe', function($sce) {
+    return function(val) {
+      return $sce.trustAsHtml(val);
+    };
   });

@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: ManagerCtrl', function () {
+describe('Controller: ArticlesCtrl', function () {
 
   // load the controller's module
   beforeEach(module('faeloApp'));
 
-  var ManagerCtrl, scope;
+  var ArticlesCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ManagerCtrl = $controller('ManagerCtrl', {
+    ArticlesCtrl = $controller('ArticlesCtrl', {
       $scope: scope
     });
   }));

@@ -12,6 +12,6 @@
 
 <div class="modal-footer">
   <p class="text-center">
-    <a href="" class="btn btn-default" ng-click="Close()">OK</a>
+    <button ng-repeat="button in data.buttons" class="btn" ng-class="button.class" ng-click="button.click($event)">{{button.text}}</button>
   </p>
 </div>
