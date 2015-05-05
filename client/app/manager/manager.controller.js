@@ -7,6 +7,7 @@ angular.module('faeloApp')
     $scope.dates = [];
 
     $scope.selectedArticle = null;
+    $scope.openedArticle = null;
 
     var now = new Date();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -199,7 +200,14 @@ angular.module('faeloApp')
 
     $scope.DeleteArticle= function(data){
       console.log(arguments)
-      $http.delete('/api/articles/'+data.item._id);
+      $http.delete('/api/articles/'+data.item._id).success(function(){
+        $state.go($state.current, {}, {reload: true});
+      });
+      $http.delete('/api/files/' + $scope.openedArticle.image).success(function(){
+        console.log(arguments)
+      }).error(function(){
+        console.log(arguments)
+      });
     };
 
 
@@ -207,8 +215,19 @@ angular.module('faeloApp')
 
       if(data.options.mode == 'add')
         $http.post('/api/articles', data.item);
-      else if(data.options.mode == 'update')
-        $http.put('/api/articles/'+data.item._id, data.item);
+      else if(data.options.mode == 'update') {
+        if(data.options.delete && $scope.openedArticle.image && $scope.openedArticle.image != '')
+          $http.delete('/api/files/' + $scope.openedArticle.image).success(function(){
+            console.log(arguments)
+          }).error(function(){
+            console.log(arguments)
+          });
+
+
+        $http.put('/api/articles/' + data.item._id, data.item).success(function(){
+          $state.go($state.current, {}, {reload: true});
+        });
+      }
       else{
         var msg = 'If you delete the article, also all the dates assigned will be deleted. <p>Do you want to go on?</p>';
         UIHandler.DialogDelete('Delete', msg, 'warning', function(){ $scope.DeleteArticle(data); });
@@ -217,9 +236,9 @@ angular.module('faeloApp')
     };
 
     $scope.OpenArticleModal = function(article, mode){
-      var article = article || {};
+      $scope.openedArticle = article || {};
       var str = (mode === 'add' ? 'Add' : 'Update');
-      UIHandler.DialogEdit(str + ' article', 'info', $scope.SetArticle, article, { mode: mode, template_name: 'components/my-modal/modal-article.html'});
+      UIHandler.DialogArticleEdit(str + ' article', 'info', $scope.SetArticle, $scope.openedArticle, { mode: mode, template_name: 'components/my-modal/modal-article.html'});
     };
 
 

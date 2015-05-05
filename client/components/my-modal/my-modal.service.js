@@ -79,13 +79,14 @@ angular.module('faeloApp').factory('UIHandler', ['$modal', function($modal){
   };
 
 
-  uiHandler.DialogEdit = function(header, type, cb, item, options){
+  uiHandler.DialogArticleEdit = function(header, type, cb, item, options){
 
     var options = SetOptions(options, type, 'components/my-modal/modal-article.html');
 
     var modalInstance = $modal.open({
       templateUrl: options.template_name,
-      controller: 'ModalContent',
+      controller: 'ModalArticleCtrl',
+      backdrop: 'static',
       size: options.size,
       resolve: { data: function(){
         return{ header: header, type: type , item: item, options: options};

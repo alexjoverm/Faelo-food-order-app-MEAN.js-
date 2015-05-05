@@ -19,7 +19,7 @@
     </p>
 
     <div class="article-card" ng-repeat="article in articles | orderBy:'-'" ng-class="{'selected': article.selected}" ng-click="setSelected(article)">
-      <img src="{{article.image}}" alt=""/>
+      <img src="/uploads/{{article.image}}" alt=""/>
       <p class="price">{{article.price}} €</p>
       <div class="caption">
         <h4 class="title">{{article.title}}</h4>
