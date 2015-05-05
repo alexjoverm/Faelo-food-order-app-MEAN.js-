@@ -202,11 +202,14 @@ angular.module('faeloApp')
       console.log(arguments)
       $http.delete('/api/articles/'+data.item._id).success(function(){
         $state.go($state.current, {}, {reload: true});
+      }).error(function(){
+        UIHandler.DialogConfirm('Error', 'Error deleting the Article...', 'error');
       });
+
       $http.delete('/api/files/' + $scope.openedArticle.image).success(function(){
         console.log(arguments)
       }).error(function(){
-        console.log(arguments)
+        UIHandler.DialogConfirm('Error', 'Error removing from disk the image associated to the Article...', 'error');
       });
     };
 
@@ -220,12 +223,14 @@ angular.module('faeloApp')
           $http.delete('/api/files/' + $scope.openedArticle.image).success(function(){
             console.log(arguments)
           }).error(function(){
-            console.log(arguments)
+            UIHandler.DialogConfirm('Error', 'Error removing from disk the image associated to the Article...', 'error');
           });
 
 
         $http.put('/api/articles/' + data.item._id, data.item).success(function(){
           $state.go($state.current, {}, {reload: true});
+        }).error(function(){
+          UIHandler.DialogConfirm('Error', 'Error updating the Article...', 'error');
         });
       }
       else{
