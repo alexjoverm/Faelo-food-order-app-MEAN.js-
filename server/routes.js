@@ -6,12 +6,14 @@
 
 var errors = require('./components/errors');
 
+
 module.exports = function(app) {
 
   // Insert routes below
   app.use('/api/dates', require('./api/date'));
   app.use('/api/articles', require('./api/article'));
   app.use('/api/users', require('./api/user'));
+  app.use('/api/files', require('./api/file'));
 
   app.use('/auth', require('./auth'));
 

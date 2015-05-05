@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema({
-  image: {type: String, default: 'http://placehold.it/350x232'},
+  image: String,
   title: String,
   description: String,
   price: {type: Number}

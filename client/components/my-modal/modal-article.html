@@ -7,7 +7,23 @@
 </div>
 
 <div class="modal-body">
+
+
+
   <form name="itemForm" ng-submit="submit(itemForm)" novalidate>
+    <div ng-controller="FileUploadCtrl">
+      <div class="btn btn-default" ngf-select ngf-change="upload($files)">Upload</div>
+
+      <div class="form-group">
+        <label>Image</label>
+
+        <input class="form-control" type="text" name="title" ng-model="data.item.image" required disabled/>
+        <p ng-show="itemForm.image.$invalid && !itemForm.image.$pristine" class="help-block">Image required.</p>
+      </div>
+      Image thumbnail: <img ngf-src="files[0]">
+    </div>
+
+
     <div class="form-group" ng-class="{ 'has-error' : itemForm.title.$invalid && !itemForm.title.$pristine }">
       <label>Title</label>
       <input class="form-control" type="text" name="title" ng-model="data.item.title" required/>

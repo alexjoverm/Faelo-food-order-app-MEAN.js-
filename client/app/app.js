@@ -7,7 +7,8 @@ angular.module('faeloApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'ui.calendar'
+  'ui.calendar',
+  'ngFileUpload'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

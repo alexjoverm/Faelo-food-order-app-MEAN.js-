@@ -24,6 +24,9 @@ angular.module('faeloApp')
     });
 
 
+
+
+    /******   CALENDAR   ******/
     $scope.insertDate = function(date){
       if(!ManagerSvc.isDayTaken(date.date)){
         var article = _.find($scope.articles, {_id: date._article});
@@ -39,8 +42,6 @@ angular.module('faeloApp')
 
       }
     };
-
-    /******   CALENDAR   ******/
 
     $scope.calendarDayClick = function(day){
       if(!ManagerSvc.isDayTaken(day)){
@@ -196,14 +197,23 @@ angular.module('faeloApp')
 
     /***** ARTICLES *****/
 
+    $scope.DeleteArticle= function(data){
+      console.log(arguments)
+      $http.delete('/api/articles/'+data.item._id);
+    };
+
+
     $scope.SetArticle= function(data){
 
       if(data.options.mode == 'add')
         $http.post('/api/articles', data.item);
       else if(data.options.mode == 'update')
         $http.put('/api/articles/'+data.item._id, data.item);
-      else
-        $http.delete('/api/articles/'+data.item._id);
+      else{
+        var msg = 'If you delete the article, also all the dates assigned will be deleted. <p>Do you want to go on?</p>';
+        UIHandler.DialogDelete('Delete', msg, 'warning', function(){ $scope.DeleteArticle(data); });
+      }
+
     };
 
     $scope.OpenArticleModal = function(article, mode){
