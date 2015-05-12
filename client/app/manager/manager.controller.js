@@ -164,7 +164,6 @@ angular.module('faeloApp')
       $scope.selectedArticle = article;
       $scope.selectedArticle.selected = true;
       $scope.config.mode = 'select';
-      $scope.config.modeButton = 0;
     };
 
     $scope.unsetSelected = function(){
