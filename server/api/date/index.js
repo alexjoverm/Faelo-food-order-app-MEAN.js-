@@ -16,14 +16,14 @@ router.patch('/default/:id', auth.hasRole('manager'), controller.update);
 router.delete('/default/:id', controller.destroy);
 
 
-router.get('/week', /*auth.hasRole('manager'),*/ controller.getWeek);
-router.get('/month', /*auth.hasRole('manager'),*/ controller.getMonth);
+router.get('/week', controller.getWeek);
+router.get('/month', controller.getMonth);
 router.post('/month', /*auth.hasRole('manager'),*/ controller.postMonth);
-router.post('/:times', /*auth.hasRole('manager'),*/ controller.postTimes);
+//router.post('/:times', /*auth.hasRole('manager'),*/ controller.postTimes);
 
 router.delete('/month/:date', /*auth.hasRole('manager'),*/ controller.deleteMonth);
 router.delete('/one/:date', /*auth.hasRole('manager'),*/ controller.deleteOne);
-router.delete('/from/:date', /*auth.hasRole('manager'),*/ controller.deleteFrom);
+//router.delete('/from/:date', /*auth.hasRole('manager'),*/ controller.deleteFrom);
 
 
 module.exports = router;

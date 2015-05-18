@@ -8,7 +8,11 @@ var DateSchema = new Schema({
   _article: { type: Schema.ObjectId, ref: 'Article' }
 });
 
-
+DateSchema
+  .path('_article')
+  .validate(function(article) {
+    return typeof article.isSnack === 'undefined' || article.isSnack === false;
+  }, 'The article should be a dish, not a snack');
 
 
 

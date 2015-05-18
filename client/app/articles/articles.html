@@ -1,5 +1,38 @@
 <div class="col-md-12">
-This is the articles view.
+
+  <section class="weekly-dishes">
+
+    <h2>Dishes</h2>
+
+    <div class="dishes-container clearfix">
+      <div class="dish-wrapper" ng-repeat="dish in dishes | orderBy:'date'">
+        {{dish.preText}}{{dish.date | date: 'EEEE dd'}}
+        <div class="article-card">
+          <img ng-src="/uploads/{{dish._article.image}}" alt=""/>
+          <p class="price">{{dish._article.price}} €</p>
+          <div class="caption">
+            <h4 class="title">{{dish._article.title}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="snacks">
+    <h2>Snacks</h2>
+
+    <div class="snacks-container clearfix">
+      <div class="article-card" ng-repeat="dish in dishes | orderBy:'-'">
+        <img ng-src="/uploads/{{dish._article.image}}" alt=""/>
+        <p class="price">{{dish._article.price}} €</p>
+        <div class="caption">
+          <h4 class="title">{{dish._article.title}}</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 

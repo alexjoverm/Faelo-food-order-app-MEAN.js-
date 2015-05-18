@@ -69,6 +69,7 @@ angular.module('faeloApp')
             $http.post('/api/dates/default/', { date: day, _article: $scope.selectedArticle._id }).success(function(date) {
               $scope.insertDate(date);
             }).error(function(err, status){
+              console.log(arguments)
                 UIHandler.DialogConfirm('Error', 'Something wrong happened with that operation... Try again.', 'error');
             });
           }

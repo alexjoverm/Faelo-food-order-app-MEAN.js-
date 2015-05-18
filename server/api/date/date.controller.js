@@ -122,37 +122,37 @@ exports.postMonth = function(req, res) {
 
 
 // Post X times (req.body = {date, article})
-exports.postTimes = function(req, res) {
-  var aux = new Date(req.body.date); // ISO string date to date
-  var date = new Date(aux.getFullYear(), aux.getMonth(), aux.getDate());
-  var arrayObj = [];
-
-  var times = parseInt(req.params.times);
-
-  if(!isNaN(times) && times < 12){
-
-    for(var i=0; i < req.params.times; i++)
-      arrayObj.push(
-        { date: new Date(date.getFullYear(), date.getMonth(), date.getDate() + (7 * i)),
-          _article: req.body._article }
-      );
-
-
-    // insert array
-    DateModel.create(arrayObj, function(err, dates) {
-      if(err) { return handleError(res, err); }
-      var result = [];
-      for (var i = 1; i < arguments.length; i++)
-        result.push(arguments[i]);
-
-      return res.json(200, result);
-    });
-
-  }
-  else{
-    res.send(400, 'You only can use a number lower than 12 times');
-  }
-};
+//exports.postTimes = function(req, res) {
+//  var aux = new Date(req.body.date); // ISO string date to date
+//  var date = new Date(aux.getFullYear(), aux.getMonth(), aux.getDate());
+//  var arrayObj = [];
+//
+//  var times = parseInt(req.params.times);
+//
+//  if(!isNaN(times) && times < 12){
+//
+//    for(var i=0; i < req.params.times; i++)
+//      arrayObj.push(
+//        { date: new Date(date.getFullYear(), date.getMonth(), date.getDate() + (7 * i)),
+//          _article: req.body._article }
+//      );
+//
+//
+//    // insert array
+//    DateModel.create(arrayObj, function(err, dates) {
+//      if(err) { return handleError(res, err); }
+//      var result = [];
+//      for (var i = 1; i < arguments.length; i++)
+//        result.push(arguments[i]);
+//
+//      return res.json(200, result);
+//    });
+//
+//  }
+//  else{
+//    res.send(400, 'You only can use a number lower than 12 times');
+//  }
+//};
 
 
 
@@ -188,25 +188,25 @@ exports.deleteOne = function(req, res) {
   });
 };
 
-exports.deleteFrom = function(req, res) {
-
-  var aux = new Date(req.params.date); // ISO string date to date
-
-  var date = new Date(aux.getFullYear(), aux.getMonth(), aux.getDate());
-  var dates = [];
-
-  for(var i=0; i < 20; i++)
-    dates.push(new Date(date.getFullYear(), date.getMonth(), date.getDate() + (7 * i)));
-
-  var arrayObj = [];
-  for(var i in dates)
-    arrayObj.push(dates[i]);
-
-  DateModel.find().where('date').in(arrayObj).remove(function(err, many) {
-    if(err) { return handleError(res, err); }
-    return res.send(204, many + ' elements removed');
-  });
-};
+//exports.deleteFrom = function(req, res) {
+//
+//  var aux = new Date(req.params.date); // ISO string date to date
+//
+//  var date = new Date(aux.getFullYear(), aux.getMonth(), aux.getDate());
+//  var dates = [];
+//
+//  for(var i=0; i < 20; i++)
+//    dates.push(new Date(date.getFullYear(), date.getMonth(), date.getDate() + (7 * i)));
+//
+//  var arrayObj = [];
+//  for(var i in dates)
+//    arrayObj.push(dates[i]);
+//
+//  DateModel.find().where('date').in(arrayObj).remove(function(err, many) {
+//    if(err) { return handleError(res, err); }
+//    return res.send(204, many + ' elements removed');
+//  });
+//};
 
 
 
