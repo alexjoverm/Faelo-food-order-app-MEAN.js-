@@ -1,23 +1,12 @@
-<div class="col-md-12">
+<div class="container">
 
   <section class="weekly-dishes">
-
-    <h2>Dishes</h2>
-
     <div class="dishes-container clearfix">
-      <div class="dish-wrapper" ng-repeat="dish in dishes | orderBy:'date'">
-        {{dish.preText}}{{dish.date | date: 'EEEE dd'}}
-        <div class="article-card">
-          <img ng-src="/uploads/{{dish._article.image}}" alt=""/>
-          <p class="price">{{dish._article.price}} €</p>
-          <div class="caption">
-            <h4 class="title">{{dish._article.title}}</h4>
-          </div>
-        </div>
-      </div>
+      <slider articles="dishes" dish="selection.dish"></slider>
     </div>
-
   </section>
+
+  <hr/>
 
   <section class="snacks">
     <h2>Snacks</h2>

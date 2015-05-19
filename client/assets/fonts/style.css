@@ -1,0 +1,45 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('icomoon.eot?8zsfyd');
+	src:url('icomoon.eot?#iefix8zsfyd') format('embedded-opentype'),
+		url('icomoon.woff?8zsfyd') format('woff'),
+		url('icomoon.ttf?8zsfyd') format('truetype'),
+		url('icomoon.svg?8zsfyd#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-spoon-knife:before {
+	content: "\e9a3";
+}
+
+.icon-fries:before {
+	content: "\e600";
+}
+
+.icon-chevron-thin-right:before {
+	content: "\e601";
+}
+
+.icon-chevron-thin-left:before {
+	content: "\e602";
+}
+
+.icon-dish:before {
+	content: "\e603";
+}
+

@@ -1,0 +1,27 @@
+<div class="slider">
+  <div class="slide article-public" ng-class="{selected: dish.amount}" ng-repeat="article in articles" ng-show="article.visible">
+    <h3>{{article.preText}}{{article.date | date: 'EEEE dd'}}</h3>
+
+    <div class="slide-content">
+      <div class="box">
+        <h4>{{article._article.title}}</h4>
+        <img ng-src="/uploads/{{article._article.image}}"/>
+        <span class="price">{{article._article.price}}€</span>
+      </div>
+
+      <a ng-hide="currentIndex == 0 || dish.amount" href="#" class="arrow-prev" ng-class="{disabled: dish.amount}" ng-click="prev()">
+        <i class="icon-chevron-thin-left"></i></a>
+      <a ng-hide="currentIndex == articles.length - 1 || dish.amount" href="#" class="arrow-next" ng-class="{disabled: dish.amount}" ng-click="next()">
+        <i class="icon-chevron-thin-right"></i></a>
+    </div>
+
+    <div class="controls">
+      <button class="btn button-outline" ng-class="{disabled: !dish.amount}" ng-click="substract($index)"><i class="icon-minus"></i></button>
+      <span ng-if="dish.index == $index">{{ dish.amount }}</span>
+      <span ng-if="dish.index != $index">0</span>
+      <button class="btn button-outline" ng-click="sum($index)"><i class="icon-plus"></i></button>
+    </div>
+  </div>
+
+
+</div>
