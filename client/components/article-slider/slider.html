@@ -16,10 +16,10 @@
     </div>
 
     <div class="controls">
-      <button class="btn button-outline" ng-class="{disabled: !dish.amount}" ng-click="substract($index)"><i class="icon-minus"></i></button>
+      <a class="btn button-outline" ng-class="{disabled: !dish.amount}" ng-click="substract($index)" href="#"><i class="icon-minus"></i></a>
       <span ng-if="dish.index == $index">{{ dish.amount }}</span>
       <span ng-if="dish.index != $index">0</span>
-      <button class="btn button-outline" ng-click="sum($index)"><i class="icon-plus"></i></button>
+      <a class="btn button-outline" ng-click="sum($index)" href="#"><i class="icon-plus"></i></a>
     </div>
   </div>
 

@@ -67,9 +67,7 @@
       padding: 8px 0;
       font-weight: 500;
       font-size: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      .make-ellipsis();
       width: 100%;
     }
 
@@ -92,10 +90,12 @@
     margin-top: 0;
     font-weight: 300;
     text-align: center;
+
   }
   h4{
+    .make-ellipsis();
     font-size: 18px;
-    padding: 10px @arrow-width+10;
+    padding: 10px;
     text-align: center;
     margin: 0;
     font-weight: 400;
