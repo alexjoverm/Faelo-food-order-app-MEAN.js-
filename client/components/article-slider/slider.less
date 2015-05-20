@@ -15,10 +15,6 @@
     padding: 0 @arrow-width;
 
   }
-  .box{
-    box-shadow: 0 0 10px #ccc;
-    position: relative;
-  }
 
   .arrow-prev, .arrow-next{
     width: @arrow-width;
@@ -47,24 +43,8 @@
     right: 0;
     i{ right: 0; }
   }
-
-  .price{
-    padding: 10px 8px;
-    border-radius: 200px;
-    background: fade(@cl-main, 85%);
-    color: white;
-    border: 2px solid white;
-    box-shadow: 1px 1px 5px #777;
-    position: absolute;
-    bottom: 5px; right: 5px;
-    font-size: 20px;
-  }
 }
 
-.slide.selected{
-  h3{ font-weight: 500; }
-  .box{ border: 4px solid #ed9c28; }
-}
 
 .slide.ng-hide-add, .slide.ng-hide-remove {
   -webkit-transition:all linear 0.5s;
@@ -83,13 +63,4 @@
   opacity:1;
 }
 
-.controls{
-  width: 100%;
-  text-align: center;
-  font-size: 18px;
-  padding-top: 7px;
-  a{
-    font-size: 18px;
-    margin: 0 6px;
-  }
-}
+

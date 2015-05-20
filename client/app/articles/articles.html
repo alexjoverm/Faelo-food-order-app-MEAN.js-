@@ -12,16 +12,21 @@
     <h2>Snacks</h2>
 
     <div class="snacks-container clearfix">
-      <div class="article-card" ng-repeat="dish in dishes | orderBy:'-'">
-        <img ng-src="/uploads/{{dish._article.image}}" alt=""/>
-        <p class="price">{{dish._article.price}} €</p>
-        <div class="caption">
-          <h4 class="title">{{dish._article.title}}</h4>
+      <div class="col-md-3 col-sm-4 col-xs-6" ng-repeat="snack in selection.snacks | orderBy:'-'">
+        <div class="article-public" ng-class="{selected: snack.amount}">
+          <div class="box">
+            <h4>{{snack.title}}</h4>
+            <img ng-src="/uploads/{{snack.image}}"/>
+            <span class="price">{{snack.price}}€</span>
+          </div>
+          <div class="controls">
+            <a class="btn button-outline" ng-class="{disabled: !snack.amount}" ng-click="substract($index)" href="#"><i class="icon-minus"></i></a>
+            <span>{{ snack.amount }}</span>
+            <a class="btn button-outline" ng-click="sum($index)" href="#"><i class="icon-plus"></i></a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
 </div>
-
-

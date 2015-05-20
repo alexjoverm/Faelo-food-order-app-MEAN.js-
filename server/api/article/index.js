@@ -6,11 +6,13 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-router.get('/', controller.index);
-router.get('/:id', controller.show);
-router.post('/', auth.hasRole('manager'), controller.create);
-router.put('/:id', auth.hasRole('manager'), controller.update);
-router.patch('/:id', auth.hasRole('manager'), controller.update);
-router.delete('/:id', auth.hasRole('manager'), controller.destroy);
+router.get('/default/', controller.index);
+router.get('/default/:id', controller.show);
+router.post('/default/', auth.hasRole('manager'), controller.create);
+router.put('/default/:id', auth.hasRole('manager'), controller.update);
+router.patch('/default/:id', auth.hasRole('manager'), controller.update);
+router.delete('/default/:id', auth.hasRole('manager'), controller.destroy);
+
+router.get('/snacks/', controller.getSnacks);
 
 module.exports = router;

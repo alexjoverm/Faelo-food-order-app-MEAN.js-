@@ -12,6 +12,13 @@ exports.index = function(req, res) {
   });
 };
 
+exports.getSnacks = function(req, res) {
+  Article.find({ isSnack: false }, function (err, articles) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, articles);
+  });
+};
+
 // Get a single article
 exports.show = function(req, res) {
   Article.findById(req.params.id, function (err, article) {
