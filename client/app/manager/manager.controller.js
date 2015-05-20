@@ -14,7 +14,7 @@ angular.module('faeloApp')
 
     /******   DATA   ******/
 
-    $http.get('/api/articles').success(function(articles, status, headers) {
+    $http.get('/api/articles/default/').success(function(articles, status, headers) {
       $scope.articles = articles;
       socket.syncUpdates('article', $scope.articles);
     });
@@ -200,7 +200,7 @@ angular.module('faeloApp')
 
     $scope.DeleteArticle= function(data){
       console.log(arguments)
-      $http.delete('/api/articles/'+data.item._id).success(function(){
+      $http.delete('/api/articles/default/'+data.item._id).success(function(){
         $state.go($state.current, {}, {reload: true});
       }).error(function(){
         UIHandler.DialogConfirm('Error', 'Error deleting the Article...', 'error');
@@ -217,7 +217,7 @@ angular.module('faeloApp')
     $scope.SetArticle= function(data){
 
       if(data.options.mode == 'add')
-        $http.post('/api/articles', data.item);
+        $http.post('/api/articles/default/', data.item);
       else if(data.options.mode == 'update') {
         if(data.options.delete && $scope.openedArticle.image && $scope.openedArticle.image != '')
           $http.delete('/api/files/' + $scope.openedArticle.image).success(function(){
@@ -227,7 +227,7 @@ angular.module('faeloApp')
           });
 
 
-        $http.put('/api/articles/' + data.item._id, data.item).success(function(){
+        $http.put('/api/articles/default/' + data.item._id, data.item).success(function(){
           $state.go($state.current, {}, {reload: true});
         }).error(function(){
           UIHandler.DialogConfirm('Error', 'Error updating the Article...', 'error');
