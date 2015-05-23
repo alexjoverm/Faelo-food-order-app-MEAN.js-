@@ -1,4 +1,4 @@
-'use strict';
+manager.controller.js'use strict';
 
 angular.module('faeloApp')
   .controller('ManagerCtrl', function ($scope, $http, $timeout, $document, $state, ManagerSvc, socket, UIHandler) {

@@ -1,0 +1,25 @@
+
+
+<div class="container">
+
+  <section class="controls">
+    <a class="btn btn-primary" href="" ng-click="OpenArticleModal({}, 'add')"><i class="fa fa-plus"></i> New</a>
+  </section>
+
+  <section class="manager-articles">
+
+    <div class="clearfix">
+      <div class="article-card col-md-3 col-sm-4 col-xs-6" ng-repeat="snack in snacks | orderBy:'-'">
+        <img src="/uploads/{{article.image}}" alt=""/>
+        <p class="price">{{article.price}} €</p>
+        <div class="caption">
+          <h4 class="title">{{article.title}}</h4>
+        </div>
+
+        <a class="btn btn-edit-card" href="" ng-click="OpenArticleModal(article, 'update')"><i class="fa fa-pencil"></i></a>
+      </div>
+    </div>
+
+  </section>
+</div>
+

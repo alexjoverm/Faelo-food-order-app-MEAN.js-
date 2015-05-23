@@ -45,7 +45,7 @@ angular.module('faeloApp').directive('slider', function ($timeout) {
       scope.$watch('articles',function(newObj){
         if(newObj && newObj.length)
           $timeout(function(){
-            elem.css('height', (elem.children()[0].offsetHeight || 390) + 'px');
+            elem.css('height', 350 + 'px');
           }, 500);
       });
 

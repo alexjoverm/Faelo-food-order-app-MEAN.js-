@@ -18,17 +18,15 @@
       </span>
     </p>
 
-    <div class="manager-articles-container row">
-      <div class="col-xs-6" ng-repeat="article in articles | orderBy:'-'">
-        <div class="article-card" ng-class="{'selected': article.selected}" ng-click="setSelected(article)">
-          <img src="/uploads/{{article.image}}" alt=""/>
-          <p class="price">{{article.price}} €</p>
-          <div class="caption">
-            <h4 class="title">{{article.title}}</h4>
-          </div>
-
-          <a class="btn btn-edit-card" href="" ng-click="OpenArticleModal(article, 'update')"><i class="fa fa-pencil"></i></a>
+    <div class="manager-articles-container">
+      <div class="article-card" ng-repeat="article in articles | orderBy:'-'" ng-class="{'selected': article.selected}" ng-click="setSelected(article)">
+        <img src="/uploads/{{article.image}}" alt=""/>
+        <p class="price">{{article.price}} €</p>
+        <div class="caption">
+          <h4 class="title">{{article.title}}</h4>
         </div>
+
+        <a class="btn btn-edit-card" href="" ng-click="OpenArticleModal(article, 'update')"><i class="fa fa-pencil"></i></a>
       </div>
     </div>
 

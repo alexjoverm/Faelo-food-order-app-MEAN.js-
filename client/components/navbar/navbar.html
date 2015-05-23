@@ -13,7 +13,9 @@
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin" ng-click="isCollapsed = true">Administration</a></li>
-        <li ng-show="isManager()" ng-class="{active: isActive('/manager')}"><a href="/manager" ng-click="isCollapsed = true">Management</a></li>
+        <li ng-show="isManager()" ng-class="{active: isActive('/manager')}"><a href="/manager" ng-click="isCollapsed = true">Dishes</a></li>
+        <li ng-show="isManager()" ng-class="{active: isActive('/manager-snacks')}"><a href="/manager-snacks" ng-click="isCollapsed = true">Snacks</a></li>
+        <li ng-show="isManager()" ng-class="{active: isActive('/manager-orders')}"><a href="/manager-orders" ng-click="isCollapsed = true">Orders</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
