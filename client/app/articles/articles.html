@@ -1,8 +1,10 @@
 <div class="container">
 
+  <div ng-show="" style="height: 40px;"></div>
+
   <section class="weekly-dishes">
     <div class="dishes-container clearfix">
-      <slider articles="dishes" dish="selection.dish" slider-height="350"  slider-detail="OpenDetail"></slider>
+      <slider articles="dishes" dish="selection.dish" slider-height="340"  slider-detail="OpenDetail"></slider>
     </div>
   </section>
 
@@ -12,7 +14,7 @@
     <h2>Snacks</h2>
 
     <div class="snacks-container clearfix">
-      <div class="col-md-3 col-sm-4 col-xs-6" ng-repeat="snack in selection.snacks | orderBy:'-'">
+      <div class="col-md-3 col-sm-4 col-xs-6" ng-repeat="snack in snacks | orderBy:'-'">
         <div class="article-public article-snack" ng-class="{selected: snack.amount}">
           <div class="box">
             <h4>{{snack.title}}</h4>

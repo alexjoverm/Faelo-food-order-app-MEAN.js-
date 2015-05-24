@@ -1,29 +1,32 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('ManagerCtrl', function ($scope, $http, $timeout, $document, $state, ManagerSvc, socket, UIHandler) {
+  .controller('ManagerCtrl', function ($scope, $http, $timeout, $document, ManagerSvc, UIHandler) {
 
     $scope.articles = [];
     $scope.dates = [];
 
-    $scope.selectedArticle = null;
+    $scope.selectedArticle = ManagerSvc.selectedArticle;
     $scope.openedArticle = null;
 
     var now = new Date();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     /******   DATA   ******/
+    $scope.articles = ManagerSvc.dishes;
+    $scope.dates[0] = ManagerSvc.dates;
 
-    $http.get('/api/articles/default/').success(function(articles, status, headers) {
-      $scope.articles = articles;
-      socket.syncUpdates('article', $scope.articles);
+    $scope.$on('ManagerSvc:datesLoaded', function(){
+      $scope.dates[0] = ManagerSvc.dates;
     });
 
-    $http.get('/api/dates/month').success(function(dates){
-      ManagerSvc.parseDates(dates);
-      $scope.dates.push(dates);
+    $scope.$on('ManagerSvc:dishesLoaded', function(){
+      $scope.articles = ManagerSvc.dishes;
     });
 
+
+    $scope.firstTime = true;
+    $scope.currentDay = null;
 
 
 
@@ -56,14 +59,12 @@ angular.module('faeloApp')
                 $scope.myCalendar.fullCalendar('refetchEvents');
               }, 50);
 
-
-
-
             }).error(function(err, status){
               if(status == 500 && err.code == 11000){
                 var msg = 'Some of the dates already exists, only the others will be created.';
                 UIHandler.DialogConfirm('Warning', msg, 'warning');
-                $state.go($state.current, {}, {reload: true});
+                ManagerSvc.lastDay = new Date($scope.currentDay.getTime());
+                ManagerSvc.loadDates(true);
               }
             });
 
@@ -136,6 +137,14 @@ angular.module('faeloApp')
       var limitBefore = new Date(now.getFullYear(), now.getMonth() - 1, 2);
       var limitAfter = new Date(now.getFullYear(), now.getMonth() + 3, 0);
 
+      if($scope.firstTime && ManagerSvc.lastDay != null){
+        $timeout(function(){
+          view.calendar.gotoDate(ManagerSvc.lastDay.getFullYear(), ManagerSvc.lastDay.getMonth(), ManagerSvc.lastDay.getDate());
+          ManagerSvc.lastDay = null;
+        }, 50);
+      }
+
+
       if(view.start < limitBefore)
         jQuery('.fc-button-prev').addClass("fc-state-disabled");
       else
@@ -145,6 +154,9 @@ angular.module('faeloApp')
         jQuery('.fc-button-next').addClass("fc-state-disabled");
       else
         jQuery('.fc-button-next').removeClass("fc-state-disabled");
+
+      $scope.firstTime = false;
+      $scope.currentDay = new Date(view.start.getTime());
     };
 
 
@@ -165,7 +177,7 @@ angular.module('faeloApp')
 
     $scope.setSelected = function(article){
       $scope.unsetSelected();
-      $scope.selectedArticle = article;
+      $scope.selectedArticle = ManagerSvc.selectedArticle = article;
       $scope.selectedArticle.selected = true;
       $scope.config.mode = 'select';
     };
@@ -202,17 +214,17 @@ angular.module('faeloApp')
     /***** ARTICLES *****/
 
     $scope.DeleteArticle= function(data){
-      console.log(arguments)
-      $http.delete('/api/articles/default/'+data.item._id).success(function(){
-        $state.go($state.current, {}, {reload: true});
-      }).error(function(){
-        UIHandler.DialogConfirm('Error', 'Error deleting the Article...', 'error');
-      });
-
       $http.delete('/api/files/' + $scope.openedArticle.image).success(function(){
         console.log(arguments)
       }).error(function(){
         UIHandler.DialogConfirm('Error', 'Error removing from disk the image associated to the Article...', 'error');
+      });
+
+      $http.delete('/api/articles/default/'+data.item._id).success(function(){
+        ManagerSvc.lastDay = new Date($scope.currentDay.getTime());
+        ManagerSvc.loadDates(true);
+      }).error(function(){
+        UIHandler.DialogConfirm('Error', 'Error deleting the Article...', 'error');
       });
     };
 
@@ -231,7 +243,8 @@ angular.module('faeloApp')
 
 
         $http.put('/api/articles/default/' + data.item._id, data.item).success(function(){
-          $state.go($state.current, {}, {reload: true});
+          ManagerSvc.lastDay = new Date($scope.currentDay.getTime());
+          ManagerSvc.loadDates(true);
         }).error(function(){
           UIHandler.DialogConfirm('Error', 'Error updating the Article...', 'error');
         });
@@ -272,7 +285,6 @@ angular.module('faeloApp')
       $scope.$on('$destroy', function () {
         $document.off('keyup');
         $document.off('keydown');
-        socket.unsyncUpdates('article');
       });
 
 

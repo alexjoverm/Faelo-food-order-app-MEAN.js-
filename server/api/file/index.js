@@ -22,7 +22,6 @@ if(config.env === 'production')
 else
   filedir = './client';
 
-console.log('----- HETE: ' + filedir)
 
 var mwMulterArticle = multer({
   dest: filedir + '/uploads',

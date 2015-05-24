@@ -13,12 +13,18 @@ exports.register = function(socket) {
   Article.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
-}
+};
 
 function onSave(socket, doc, cb) {
-  socket.emit('article:save', doc);
+  if(doc.isSnack)
+    socket.emit('snack:save', doc);
+  else
+    socket.emit('dish:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('article:remove', doc);
+  if(doc.isSnack)
+    socket.emit('snack:remove', doc);
+  else
+    socket.emit('dish:remove', doc);
 }

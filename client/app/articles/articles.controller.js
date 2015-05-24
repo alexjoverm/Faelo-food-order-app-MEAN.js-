@@ -1,38 +1,20 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('ArticlesCtrl', function ($scope, $http, ArticlesSvc, UIHandler) {
+  .controller('ArticlesCtrl', function ($scope, ArticlesSvc, UIHandler) {
 
     $scope.selection = ArticlesSvc.selection;
-
-    $http.get('/api/dates/week').success(function(dishes) {
-
-      $scope.dishes = dishes;
-
-      for(var i in $scope.dishes)
-        $scope.dishes[i].date = new Date($scope.dishes[i].date);
+    $scope.dishes = ArticlesSvc.dishes;
+    $scope.snacks = ArticlesSvc.snacks;
 
 
-      var now = new Date();
-      var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-
-      if($scope.dishes.length > 1 && $scope.dishes[0].date.getTime() == today.getTime()){
-        $scope.dishes[0].preText = 'Today, ';
-        $scope.dishes[0].visible = true;
-      }
-      if($scope.dishes.length > 2 && $scope.dishes[1].date.getTime() == tomorrow.getTime())
-        $scope.dishes[1].preText = 'Tomorrow, ';
-
+    $scope.$on('ArticleSvc:dishesLoaded', function(){
+      $scope.dishes = ArticlesSvc.dishes;
+    });
+    $scope.$on('ArticleSvc:snacksLoaded', function(){
+      $scope.snacks = ArticlesSvc.snacks;
     });
 
-
-    $http.get('/api/articles/snacks/').success(function(snacks) {
-      for(var i in snacks){
-        snacks[i].amount = 0;
-        $scope.selection.snacks.push(snacks[i]);
-      }
-    });
 
 
 
@@ -45,12 +27,13 @@ angular.module('faeloApp')
 
 
     $scope.sum=function(index){
-      $scope.selection.snacks[index].amount++;
+      console.log()
+      $scope.snacks[index].amount++;
     };
 
     $scope.substract=function(index){
-      $scope.selection.snacks[index].amount--;
-      if($scope.selection.snacks[index].amount < 0) $scope.selection.snacks[index].amount = 0;
+      $scope.snacks[index].amount--;
+      if($scope.snacks[index].amount < 0) $scope.snacks[index].amount = 0;
     };
 
 });

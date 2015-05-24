@@ -2,11 +2,18 @@
 'use strict';
 
 angular.module('faeloApp')
-  .factory('ManagerSvc', function() {
+  .factory('ManagerSvc', function($http, $rootScope, socket, $state) {
 
     var arrReference = null;
 
-    return {
+    var returnObj =  {
+
+      dishes: [],
+      dates: [],
+      orders: [],
+      lastDay: null,
+      selectedArticle: null,
+
       parseDates: function(arr){
         arrReference = arr;
         for(var i in arr)
@@ -59,7 +66,35 @@ angular.module('faeloApp')
         }
 
         return result;
+      },
+
+      loadDishes: function(firstTime){
+        $http.get('/api/articles/dishes/').success(function(dishes, status, headers) {
+          returnObj.dishes = dishes;
+          $rootScope.$broadcast('ManagerSvc:dishesLoaded');
+          if(firstTime)
+            socket.syncUpdates('dish', returnObj.dishes);
+
+        });
+      },
+      loadDates: function(redirect){
+        $http.get('/api/dates/month').success(function(dates){
+          returnObj.parseDates(dates);
+          returnObj.dates = dates;
+          $rootScope.$broadcast('ManagerSvc:datesLoaded');
+
+          if(redirect)
+            $state.go($state.current, {}, {reload: true});
+        });
       }
-    }
+    };
+
+
+    returnObj.loadDishes(true);
+    returnObj.loadDates();
+
+
+
+    return returnObj;
 
   });

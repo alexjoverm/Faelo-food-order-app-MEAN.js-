@@ -14,5 +14,6 @@ router.patch('/default/:id', auth.hasRole('manager'), controller.update);
 router.delete('/default/:id', auth.hasRole('manager'), controller.destroy);
 
 router.get('/snacks/', controller.getSnacks);
+router.get('/dishes/', controller.getDishes);
 
 module.exports = router;
