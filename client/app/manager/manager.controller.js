@@ -243,6 +243,10 @@ angular.module('faeloApp')
 
     };
 
+
+
+    //******** MODALS
+
     $scope.OpenArticleModal = function(article, mode){
       $scope.openedArticle = article || {};
       var str = (mode === 'add' ? 'Add' : 'Update');

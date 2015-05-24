@@ -5,7 +5,7 @@
     <div class="slide-content">
       <div class="box">
         <h4>{{article._article.title}}</h4>
-        <img ng-src="/uploads/{{article._article.image}}"/>
+        <img ng-src="/uploads/{{article._article.image}}" ng-click="sliderDetail(article._article)"/>
         <span class="price">{{article._article.price}}€</span>
       </div>
 

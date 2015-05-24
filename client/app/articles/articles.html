@@ -2,7 +2,7 @@
 
   <section class="weekly-dishes">
     <div class="dishes-container clearfix">
-      <slider articles="dishes" dish="selection.dish"></slider>
+      <slider articles="dishes" dish="selection.dish" slider-height="350"  slider-detail="OpenDetail"></slider>
     </div>
   </section>
 
@@ -13,10 +13,10 @@
 
     <div class="snacks-container clearfix">
       <div class="col-md-3 col-sm-4 col-xs-6" ng-repeat="snack in selection.snacks | orderBy:'-'">
-        <div class="article-public" ng-class="{selected: snack.amount}">
+        <div class="article-public article-snack" ng-class="{selected: snack.amount}">
           <div class="box">
             <h4>{{snack.title}}</h4>
-            <img ng-src="/uploads/{{snack.image}}"/>
+            <img ng-src="/uploads/{{snack.image}}" ng-click="OpenDetail(snack)"/>
             <span class="price">{{snack.price}}€</span>
           </div>
           <div class="controls">

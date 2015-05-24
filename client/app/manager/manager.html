@@ -21,7 +21,7 @@
     <div class="manager-articles-container row">
       <div class="col-xs-6" ng-repeat="article in articles | orderBy:'-'">
         <div class="article-card" ng-class="{'selected': article.selected}" ng-click="setSelected(article)">
-          <img src="/uploads/{{article.image}}" alt=""/>
+          <img src="/uploads/{{article.image}}" alt="" ng-click="OpenDetail(article)"/>
           <p class="price">{{article.price}} €</p>
           <div class="caption">
             <h4 class="title">{{article.title}}</h4>

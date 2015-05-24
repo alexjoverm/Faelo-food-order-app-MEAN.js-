@@ -4,13 +4,15 @@ angular.module('faeloApp').directive('slider', function ($timeout) {
     replace: true,
     scope:{
       articles: '=',
-      dish: '=' // {index: X, amount: xx}
+      dish: '=', // {index: X, amount: xx}
+      sliderDetail: '&'
     },
     link: function (scope, elem, attrs) {
 
       scope.currentIndex=0;
+      scope.sliderDetail = scope.sliderDetail();
 
-
+      elem.css('height', attrs.sliderHeight + 'px');
 
       scope.next=function(){
         scope.currentIndex<scope.articles.length-1?scope.currentIndex++:scope.currentIndex=0;
@@ -40,13 +42,6 @@ angular.module('faeloApp').directive('slider', function ($timeout) {
           });
           scope.articles[scope.currentIndex].visible=true;
         }
-      });
-
-      scope.$watch('articles',function(newObj){
-        if(newObj && newObj.length)
-          $timeout(function(){
-            elem.css('height', 350 + 'px');
-          }, 500);
       });
 
 

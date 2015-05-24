@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('ArticlesCtrl', function ($scope, $http, ArticlesSvc) {
+  .controller('ArticlesCtrl', function ($scope, $http, ArticlesSvc, UIHandler) {
 
     $scope.selection = ArticlesSvc.selection;
 
@@ -28,18 +28,20 @@ angular.module('faeloApp')
 
 
     $http.get('/api/articles/snacks/').success(function(snacks) {
-      console.log(snacks)
       for(var i in snacks){
         snacks[i].amount = 0;
         $scope.selection.snacks.push(snacks[i]);
       }
-
-      console.log($scope.selection)
     });
 
 
-/********  DETAIL MODAL  **********/
 
+/********  DETAIL MODAL  **********/
+    $scope.OpenDetail = function(article){
+      var msg = '<img class="img-responsive" src="/uploads/' + article.image + '"/>';
+      msg += '<p class="padding-v text-m">'+ article.description +'</p><h4>Price: '+ article.price +' €</h4>';
+      UIHandler.DialogConfirm(article.title, msg,'info');
+    };
 
 
     $scope.sum=function(index){
