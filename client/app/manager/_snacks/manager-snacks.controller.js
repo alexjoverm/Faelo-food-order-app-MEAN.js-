@@ -5,7 +5,7 @@ angular.module('faeloApp')
 
     $scope.snacks = ArticlesSvc.snacks;
 
-    $scope.$on('ManagerSvc:datesLoaded', function(){
+    $scope.$on('ArticleSvc:snacksLoaded', function(){
       $scope.snacks = ArticlesSvc.snacks;
     });
 
@@ -36,7 +36,6 @@ angular.module('faeloApp')
 
 
         $http.put('/api/articles/default/' + data.item._id, data.item).success(function(){
-          $state.go($state.current, {}, {reload: true});
         }).error(function(){
           UIHandler.DialogConfirm('Error', 'Error updating the Article...', 'error');
         });

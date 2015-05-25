@@ -12,13 +12,14 @@ exports.setup = function (User, config) {
         'google.id': profile.id
       }, function(err, user) {
         if (!user) {
+          var aux = profile._json.image.url;
           user = new User({
             name: profile.displayName,
             email: profile.emails[0].value,
             role: 'user',
             username: profile.username,
             provider: 'google',
-            image: profile._json.image.url,
+            image: aux.replace(/(\?.*sz=)([0-9]+)/, '$1150'),
             google: profile._json
           });
           user.save(function(err) {

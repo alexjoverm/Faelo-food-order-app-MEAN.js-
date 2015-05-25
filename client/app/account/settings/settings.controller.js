@@ -3,6 +3,8 @@
 angular.module('faeloApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
+    $scope.currentUser = Auth.getCurrentUser();
+    $scope.messageName = {};
 
     $scope.changePassword = function(form) {
       $scope.submitted = true;
@@ -19,5 +21,18 @@ angular.module('faeloApp')
       }
 		};
 
-    console.log(Auth.getCurrentUser());
+    $scope.changeName = function(form){
+      $scope.submittedName = true;
+      if(form.$valid){
+        User.changeName({ id: $scope.currentUser._id }, {name: $scope.user.name }, function(user) {
+          $scope.messageName.msg = 'Name changed successfully';
+          $scope.messageName.class = 'text-success';
+          $scope.currentUser.name = $scope.user.name;
+        }, function(err) {
+          $scope.messageName.msg = 'Something wrong happened when saving the name';
+          $scope.messageName.class = 'text-danger';
+        });
+      }
+    }
+
   });

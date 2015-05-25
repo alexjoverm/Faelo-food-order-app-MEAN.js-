@@ -12,6 +12,12 @@ angular.module('faeloApp')
           controller:'password'
         }
       },
+      changeName: {
+        method: 'PUT',
+        params: {
+          controller:'name'
+        }
+      },
       get: {
         method: 'GET',
         params: {

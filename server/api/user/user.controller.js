@@ -80,6 +80,19 @@ exports.changePassword = function(req, res, next) {
   });
 };
 
+exports.changeName = function(req, res, next) {
+  var userId = req.user._id;
+  var name = String(req.body.name);
+
+  User.findById(userId, function (err, user) {
+    user.name = name;
+    user.save(function(err) {
+      if (err) return validationError(res, err);
+      res.send(200);
+    });
+  });
+};
+
 /**
  * Get my info
  */

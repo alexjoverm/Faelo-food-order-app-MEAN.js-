@@ -54,6 +54,25 @@ function hasRole(roleRequired) {
 }
 
 /**
+ * Checks if current User is saved on local strategy
+ */
+
+function isLocalStrategy(){
+  return compose().use(function(req,res,next){
+    User.findById(req.params.id, function (err, user) {
+      if (!user) return res.send(401);
+
+      if(user.provider === 'local')
+        next();
+      else
+        res.send(400, 'Only can change password on local strategy')
+    });
+  });
+}
+
+
+
+/**
  * Returns a jwt token signed by the app secret
  */
 function signToken(id, role) {
@@ -75,3 +94,4 @@ exports.isAuthenticated = isAuthenticated;
 exports.hasRole = hasRole;
 exports.signToken = signToken;
 exports.setTokenCookie = setTokenCookie;
+exports.isLocalStrategy = isLocalStrategy;

@@ -1,38 +1,72 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
-      <h1>Change Password</h1>
-    </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+    <div class="col-sm-6">
+      <div class="user-info">
+        <img ng-show="currentUser.image" ng-src="{{currentUser.image}}" alt="{{currentUser.name}}"/>
+        <h4>{{currentUser.name}}</h4>
+        <p>{{currentUser.email}}</p>
+      </div>
 
-        <div class="form-group">
-          <label>Current Password</label>
 
-          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
+
+      <div ng-show="currentUser.provider === 'local'">
+
+        <hr class="margin-top-l"/>
+
+        <h3 class="margin-top-l">Change Name</h3>
+        <form class="form" name="formName" ng-submit="changeName(formName)" novalidate>
+
+          <div class="form-group" ng-class="{ 'has-error' : formName.name.$invalid && submittedName }">
+            <label>Name</label>
+
+            <input type="text" name="name" class="form-control" ng-model="user.name"
+                   mongoose-error required/>
+            <p ng-show="formName.name.$invalid && submittedName" class="help-block">Name required.</p>
+
+          </div>
+
+          <p class="{{ messageName.class }}"> {{ messageName.msg }} </p>
+
+          <button class="btn btn-primary" type="submit">Save changes</button>
+        </form>
+
+        <h3 class="margin-top-l">Change Password</h3>
+        <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+          <div class="form-group" ng-class="{ 'has-error' : form.password.$invalid && submitted }">
+            <label>Current Password</label>
+
+            <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+                   mongoose-error/>
+            <p class="help-block" ng-show="form.password.$error.mongoose">
               {{ errors.other }}
-          </p>
-        </div>
+            </p>
+          </div>
 
-        <div class="form-group">
-          <label>New Password</label>
+          <div class="form-group" ng-class="{ 'has-error' : form.newPassword.$invalid && submitted }">
+            <label>New Password</label>
 
-          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
-            Password must be at least 3 characters.
-          </p>
-        </div>
+            <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
+                   ng-minlength="3"
+                   required/>
+            <p class="help-block"
+               ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+              Password must be at least 3 characters.
+            </p>
+          </div>
 
-        <p class="help-block"> {{ message }} </p>
+          <p class="text-success"> {{ message }} </p>
 
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
-      </form>
+          <button class="btn btn-primary" type="submit">Save changes</button>
+        </form>
+      </div>
     </div>
+
+    <div class="col-sm-6">
+      <h3 class="text-center">Tus pedidos</h3>
+    </div>
+
+
   </div>
 </div>

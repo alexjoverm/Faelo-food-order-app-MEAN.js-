@@ -50,7 +50,6 @@ angular.module('faeloApp')
     $scope.setImage = function(files){
       if (files && files.length)
         $scope.data.item.image = files[0];
-      console.log($scope.data.item.image )
     };
 
   });

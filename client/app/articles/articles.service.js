@@ -41,7 +41,7 @@ angular.module('faeloApp')
 
       returnObj.snacks = snacks;
       $rootScope.$broadcast('ArticleSvc:snacksLoaded');
-      socket.syncUpdates('snack', returnObj.dishes);
+      socket.syncUpdates('snack', returnObj.snacks);
     });
 
 

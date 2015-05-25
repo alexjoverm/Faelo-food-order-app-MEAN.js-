@@ -60,6 +60,14 @@ UserSchema
  * Validations
  */
 
+// Validate empty name
+UserSchema
+  .path('name')
+  .validate(function(name) {
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    return name.length;
+  }, 'Name cannot be blank');
+
 // Validate empty email
 UserSchema
   .path('email')
