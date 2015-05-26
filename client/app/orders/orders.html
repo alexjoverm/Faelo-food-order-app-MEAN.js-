@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container padding-bottom">
 
   <div class="row">
     <div class="col-sm-12">
@@ -56,16 +56,12 @@
 
         <div class="form-group" ng-class="{ 'has-error' : form.date.$invalid && submitted }">
           <label>Date</label>
+          <a ng-show="dish" class="date-help" href="#" tooltip-placement="right" tooltip="As you ordered a main dish, the date is taken from the dish date">
+            <i class="glyphicon glyphicon-question-sign"></i>
+          </a>
+          <select class="form-control" ng-options="date.str for date in dates" ng-model="selectedDate"
+                  ng-disabled="dish" type="text" name="date" required></select>
 
-          <p class="input-group">
-            <span class="input-group-btn">
-              <button ng-disabled="dish" type="button" class="btn btn-default" ng-click="open($event)"><i
-                class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-            <input class="form-control input-datepicker" ng-disabled="dish" type="text" name="date" ng-model="order.date" required readonly
-                   datepicker-popup="'dd/MM/yyyy'" is-open="opened" show-weeks="false" min-date="dates.min" max-date="dates.max" datepicker-options="dateConfig"/>
-
-          </p>
           <p class="help-block" ng-show="form.date.$invalid && submitted">
             Please, enter a date.
           </p>
@@ -73,10 +69,10 @@
 
         <div class="form-group" ng-class="{ 'has-error' : form.time.$invalid && submitted }">
           <label>Estimated pick-up time</label>
-          <input type="text" name="time" class="form-control" ng-model="order.time" required/>
+          <input type="text" name="time" placeholder="Ex: 14:25..." class="form-control" ng-model="order.time" ng-pattern="/^(([0-1][0-9])|([2][0-3]))[:\.]([0-5][0-9])$/" required/>
 
           <p class="help-block" ng-show="form.time.$invalid && submitted">
-            Please, enter an estimated pick-up time.
+            Type a time in 24h format. Examples: 09:15, 14:00...
           </p>
         </div>
 

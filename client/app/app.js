@@ -4,7 +4,7 @@ angular.module('faeloApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  //'ngAnimate',
+  'ngAnimate',
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',

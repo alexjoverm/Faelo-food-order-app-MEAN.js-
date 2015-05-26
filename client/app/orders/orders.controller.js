@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('OrdersCtrl', function ($scope, $state, $filter, ArticlesSvc, Auth) {
+  .controller('OrdersCtrl', function ($scope, $state, $filter, ArticlesSvc, Auth, Config) {
 
     if(ArticlesSvc.isSelectionEmpty())
       $state.go('articles');
@@ -14,11 +14,12 @@ angular.module('faeloApp')
       $scope.dish.amount = ArticlesSvc.selection.dish.amount;
     }
 
-
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     /**** Order data *****/
     $scope.order = {
-      date: new Date(),
+      date: new Date(today.getTime()),
       pickupTime: '',
       totalPrice: 0,
       userId: null,
@@ -64,32 +65,36 @@ angular.module('faeloApp')
 
       if(form.$valid){
 
+        // Build up object
+        var objRequest = angular.copy($scope.order);
 
+        if(!Auth.isLoggedIn())
+          delete objRequest.userId;
+        else if(objRequest.name === '')
+          delete objRequest.name;
+
+        // Atach date
+        objRequest.date = new Date($scope.selectedDate.date.getTime());
 
       }
     };
 
-    var today = new Date();
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 5);
 
-    $scope.dates = {
-      min: today,
-      max: tomorrow
-    };
+    /***** Dates *****/
+    $scope.dates = [];
 
-    $scope.dateConfig = {
-      startingDay: 1
-    };
+    $scope.dates.push({ str: 'Today, ' + $filter('date')(today, 'EEEE dd'), date: new Date(today.getTime()) });
+    today.setDate(today.getDate() + 1);
+    $scope.dates.push({ str: 'Tomorrow, ' + $filter('date')(today, 'EEEE dd'), date: new Date(today.getTime()) });
 
+    for(var i=0; i < Config.itemsToDisplay - 2; i++){
+      today.setDate(today.getDate() + 1);
+      $scope.dates.push({ str: $filter('date')(today, 'EEEE dd'), date: new Date(today.getTime()) });
+    }
 
-
-    $scope.open = function($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-
-      $scope.opened = true;
-    };
+    for(var i in $scope.dates)
+      if($scope.dates[i].date.getTime() == $scope.order.date.getTime())
+        $scope.selectedDate = $scope.dates[i];
 
 
   });
