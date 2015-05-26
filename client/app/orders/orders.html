@@ -2,6 +2,8 @@
 
   <div class="row">
     <div class="col-sm-12">
+      <h3>Your order</h3>
+
       <table class="table">
         <thead>
         <tr>
@@ -13,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr ng-show="dish">
           <td><i class="fa fa-cutlery"></i></td>
           <td>{{dish._article.title}}</td>
           <td>{{dish.amount}}</td>
@@ -30,7 +32,7 @@
         </tbody>
       </table>
 
-      <h4 class="total">Total: {{vars.total}} €</h4>
+      <h4 class="total">Total: {{order.totalPrice}} €</h4>
     </div>
   </div>
 
@@ -44,7 +46,9 @@
 
         <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && submitted }">
           <label>Name</label>
-          <input ng-disabled="loggedIn" type="text" name="name" class="form-control" ng-model="user.name" required/>
+          <input ng-disabled="loggedIn" type="text" name="name" class="form-control" ng-model="user.name"
+                 ng-required="{{!loggedIn}}"/>
+
           <p class="help-block" ng-show="form.name.$invalid && submitted">
             Please, enter your name.
           </p>
@@ -52,7 +56,16 @@
 
         <div class="form-group" ng-class="{ 'has-error' : form.date.$invalid && submitted }">
           <label>Date</label>
-          <input type="text" name="date" class="form-control" ng-model="order.date" required/>
+
+          <p class="input-group">
+            <span class="input-group-btn">
+              <button ng-disabled="dish" type="button" class="btn btn-default" ng-click="open($event)"><i
+                class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+            <input class="form-control input-datepicker" ng-disabled="dish" type="text" name="date" ng-model="order.date" required readonly
+                   datepicker-popup="'dd/MM/yyyy'" is-open="opened" show-weeks="false" min-date="dates.min" max-date="dates.max" datepicker-options="dateConfig"/>
+
+          </p>
           <p class="help-block" ng-show="form.date.$invalid && submitted">
             Please, enter a date.
           </p>
@@ -61,6 +74,7 @@
         <div class="form-group" ng-class="{ 'has-error' : form.time.$invalid && submitted }">
           <label>Estimated pick-up time</label>
           <input type="text" name="time" class="form-control" ng-model="order.time" required/>
+
           <p class="help-block" ng-show="form.time.$invalid && submitted">
             Please, enter an estimated pick-up time.
           </p>

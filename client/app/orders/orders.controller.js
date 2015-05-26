@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('OrdersCtrl', function ($scope, $state, ArticlesSvc, Auth) {
+  .controller('OrdersCtrl', function ($scope, $state, $filter, ArticlesSvc, Auth) {
 
     if(ArticlesSvc.isSelectionEmpty())
       $state.go('articles');
@@ -16,18 +16,42 @@ angular.module('faeloApp')
 
 
 
-    /**** Total Price *****/
-    $scope.vars = {
-      total: 0
+    /**** Order data *****/
+    $scope.order = {
+      date: new Date(),
+      pickupTime: '',
+      totalPrice: 0,
+      userId: null,
+      name: '',
+      items: []
     };
 
+    console.log(Auth.getCurrentUser()._id)
+
+    // Attach user
+    if(Auth.isLoggedIn())
+      $scope.order.userId = Auth.getCurrentUser()._id;
+
+    // Calculate total price and attach
     for(var i in $scope.snacks)
-      $scope.vars.total += $scope.snacks[i].amount * $scope.snacks[i].price;
+      $scope.order.totalPrice += $scope.snacks[i].amount * $scope.snacks[i].price;
 
     if($scope.dish)
-      $scope.vars.total += $scope.dish._article.price * $scope.dish.amount;
+      $scope.order.totalPrice += $scope.dish._article.price * $scope.dish.amount;
 
-    $scope.vars.total = +$scope.vars.total.toFixed(2);
+    $scope.order.totalPrice = +$scope.order.totalPrice.toFixed(2);
+
+    // Attach dishes and snacks
+    if($scope.dish) {
+      $scope.order.date = new Date($scope.dish.date.getTime());
+      $scope.order.items.push($scope.dish._article._id);
+    }
+
+    for(var i in $scope.snacks)
+      $scope.order.items.push($scope.snacks[i]._id);
+
+    console.log($scope.order)
+
 
 
 
@@ -39,16 +63,34 @@ angular.module('faeloApp')
       $scope.submitted = true;
 
       if(form.$valid){
-        console.log('valid')
-        if($scope.loggedIn){
-          // Attach the user to the request
-        }
-        else{
-          // Attach the name to the request
-        }
+
+
 
       }
     };
+
+    var today = new Date();
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 5);
+
+    $scope.dates = {
+      min: today,
+      max: tomorrow
+    };
+
+    $scope.dateConfig = {
+      startingDay: 1
+    };
+
+
+
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.opened = true;
+    };
+
 
   });
 
