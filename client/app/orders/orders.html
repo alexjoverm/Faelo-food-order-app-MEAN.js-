@@ -1,0 +1,74 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><i class="fa fa-cutlery"></i></td>
+          <td>{{dish._article.title}}</td>
+          <td>{{dish.amount}}</td>
+          <td>{{dish._article.price | number:2}} €</td>
+          <td>{{dish.amount * dish._article.price | number:2}} €</td>
+        </tr>
+        <tr ng-repeat="snack in snacks">
+          <td><i class="fa fa-spoon"></i></td>
+          <td>{{snack.title}}</td>
+          <td>{{snack.amount}}</td>
+          <td>{{snack.price | number:2}} €</td>
+          <td>{{snack.amount * snack.price | number:2}} €</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h4 class="total">Total: {{vars.total}} €</h4>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h3>Complete your order</h3>
+
+      <form class="form" name="form" ng-submit="PerformOrder(form)" novalidate>
+
+        <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && submitted }">
+          <label>Name</label>
+          <input ng-disabled="loggedIn" type="text" name="name" class="form-control" ng-model="user.name" required/>
+          <p class="help-block" ng-show="form.name.$invalid && submitted">
+            Please, enter your name.
+          </p>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : form.date.$invalid && submitted }">
+          <label>Date</label>
+          <input type="text" name="date" class="form-control" ng-model="order.date" required/>
+          <p class="help-block" ng-show="form.date.$invalid && submitted">
+            Please, enter a date.
+          </p>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : form.time.$invalid && submitted }">
+          <label>Estimated pick-up time</label>
+          <input type="text" name="time" class="form-control" ng-model="order.time" required/>
+          <p class="help-block" ng-show="form.time.$invalid && submitted">
+            Please, enter an estimated pick-up time.
+          </p>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Book Order</button>
+      </form>
+    </div>
+  </div>
+
+</div>

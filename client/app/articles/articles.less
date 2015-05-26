@@ -170,8 +170,29 @@
 }
 
 
+.order-control{
+  text-align: center;
+  background: rgba(0,0,0,0.6);
+  padding: 5px;
+  position: fixed;
+  left: 0; bottom: 0;
+  width: 100%;
+  z-index: 50;
+}
 
+.order-control.ng-hide-add, .order-control.ng-hide-remove {
+  transition:all linear 0.3s;
+}
 
+.order-control.ng-hide-add.ng-hide-add-active, .order-control.ng-hide-remove {
+  opacity:0;
+  bottom: -50px;
+}
+
+.order-control.ng-hide-add, .order-control.ng-hide-remove.ng-hide-remove-active {
+  opacity:1;
+  bottom: 0;
+}
 
 
 

@@ -1,6 +1,10 @@
 <div class="container">
 
-  <div ng-show="" style="height: 40px;"></div>
+  <div class="order-control" ng-show="config.someSelected">
+    <div class="wrap">
+      <a class="btn btn-lg btn-danger" ng-click="DoOrder()">Order <i class="fa fa-chevron-right"></i></a>
+    </div>
+  </div>
 
   <section class="weekly-dishes">
     <div class="dishes-container clearfix">

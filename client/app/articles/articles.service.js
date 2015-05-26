@@ -10,7 +10,23 @@ angular.module('faeloApp')
       },
 
       dishes: null,
-      snacks: null
+      snacks: null,
+      config: {
+        someSelected: false
+      },
+
+      setSelection: function(){
+        this.selection.snacks = _.filter(this.snacks, function(sn){ return sn.amount > 0; })
+      },
+
+      resetSelection: function(){
+        this.selection.dish.amount = 0;
+        this.selection.snacks = [];
+      },
+
+      isSelectionEmpty: function(){
+        return !(this.selection.snacks.length || this.selection.dish.amount);
+      }
     };
 
     $http.get('/api/dates/week').success(function(dishes) {
