@@ -22,6 +22,7 @@ angular.module('faeloApp')
       resetSelection: function(){
         this.selection.dish.amount = 0;
         this.selection.snacks = [];
+        for(var i in this.snacks) this.snacks[i].amount = 0;
       },
 
       isSelectionEmpty: function(){
@@ -33,7 +34,6 @@ angular.module('faeloApp')
 
       for(var i in dishes)
         dishes[i].date = new Date(dishes[i].date);
-
 
       var now = new Date();
       var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());

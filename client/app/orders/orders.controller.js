@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('OrdersCtrl', function ($scope, $state, $filter, ArticlesSvc, Auth, Config) {
+  .controller('OrdersCtrl', function ($scope, $state, $filter, $http, ArticlesSvc, Auth, Config, UIHandler) {
 
     if(ArticlesSvc.isSelectionEmpty())
       $state.go('articles');
@@ -20,46 +20,47 @@ angular.module('faeloApp')
     /**** Order data *****/
     $scope.order = {
       date: new Date(today.getTime()),
-      pickupTime: '',
-      totalPrice: 0,
-      userId: null,
+      time: '',
+      amount: 0,
+      _user: null,
       name: '',
-      items: []
+      _items: []
     };
 
-    console.log(Auth.getCurrentUser()._id)
+    $scope.loggedIn = Auth.isLoggedIn();
+    if($scope.loggedIn) {
+      $scope.order._user = angular.copy(Auth.getCurrentUser());
+      $scope.order.name = $scope.order._user.name;
+    }
+
 
     // Attach user
     if(Auth.isLoggedIn())
-      $scope.order.userId = Auth.getCurrentUser()._id;
+      $scope.order._user = Auth.getCurrentUser()._id;
 
     // Calculate total price and attach
     for(var i in $scope.snacks)
-      $scope.order.totalPrice += $scope.snacks[i].amount * $scope.snacks[i].price;
+      $scope.order.amount += $scope.snacks[i].amount * $scope.snacks[i].price;
 
     if($scope.dish)
-      $scope.order.totalPrice += $scope.dish._article.price * $scope.dish.amount;
+      $scope.order.amount += $scope.dish._article.price * $scope.dish.amount;
 
-    $scope.order.totalPrice = +$scope.order.totalPrice.toFixed(2);
+    $scope.order.amount = +$scope.order.amount.toFixed(2);
 
     // Attach dishes and snacks
     if($scope.dish) {
       $scope.order.date = new Date($scope.dish.date.getTime());
-      $scope.order.items.push($scope.dish._article._id);
+      $scope.order._items.push({ amount: $scope.dish.amount, _item: $scope.dish._article._id });
     }
 
     for(var i in $scope.snacks)
-      $scope.order.items.push($scope.snacks[i]._id);
+      $scope.order._items.push({amount: $scope.snacks[i].amount, _item: $scope.snacks[i]._id });
 
-    console.log($scope.order)
 
 
 
 
     /***** Form *****/
-    $scope.user = angular.copy(Auth.getCurrentUser());
-    $scope.loggedIn = Auth.isLoggedIn();
-
     $scope.PerformOrder = function(form){
       $scope.submitted = true;
 
@@ -69,14 +70,30 @@ angular.module('faeloApp')
         var objRequest = angular.copy($scope.order);
 
         if(!Auth.isLoggedIn())
-          delete objRequest.userId;
-        else if(objRequest.name === '')
-          delete objRequest.name;
+          delete objRequest._user;
 
         // Atach date
         objRequest.date = new Date($scope.selectedDate.date.getTime());
+        objRequest.time = objRequest.time.replace('.', ':');
 
+        $http.post('/api/orders/', objRequest).success(function(order) {
+
+          console.log(order);
+          var header = 'Order booked!';
+          var msg = '<p>Your order has been booked successfully!! Come and pick up your meal: </p>' +
+              '<h4 class="text-center">' + $scope.selectedDate.str + ' at ' + order.time;
+
+          UIHandler.DialogConfirm(header, msg, 'success', {backdrop: 'static', callback: $scope.redirect});
+        }).error(function(err){
+          var msg = "Something wrong happened, please try again";
+          UIHandler.DialogConfirm('Error', msg, 'error');
+        });
       }
+    };
+
+    $scope.redirect = function(){
+      ArticlesSvc.resetSelection();
+      $state.go('articles');
     };
 
 

@@ -16,6 +16,7 @@ angular.module('faeloApp').factory('UIHandler', ['$modal', function($modal){
     options.redirect = options.redirect || false;
     options.size = options.size || 'md'; // 'sm', 'md' o 'lg'
     options.template_name = options.template_name || template_default;
+    options.backdrop = options.backdrop || true;
 
     return angular.copy(options);
   };
@@ -34,6 +35,7 @@ angular.module('faeloApp').factory('UIHandler', ['$modal', function($modal){
       templateUrl: options.template_name,
       controller: 'ModalContent',
       size: options.size,
+      backdrop: options.backdrop,
       resolve: { data: function(){
         return{
           header: header, msg: message ,
@@ -45,6 +47,12 @@ angular.module('faeloApp').factory('UIHandler', ['$modal', function($modal){
           }]
         };
       }}
+    });
+
+    modalInstance.result.then(function() {
+      if(options.callback) options.callback();
+    }, function(){
+      if(options.callback) options.callback();
     });
   };
 

@@ -1,4 +1,4 @@
-<div class="container padding-bottom">
+<div class="container">
 
   <div class="row">
     <div class="col-sm-12">
@@ -15,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-show="dish">
+        <tr ng-show="dish" class="dish-row">
           <td><i class="fa fa-cutlery"></i></td>
           <td>{{dish._article.title}}</td>
           <td>{{dish.amount}}</td>
@@ -32,7 +32,7 @@
         </tbody>
       </table>
 
-      <h4 class="total">Total: {{order.totalPrice}} €</h4>
+      <h4 class="total">Total: {{order.amount}} €</h4>
     </div>
   </div>
 
@@ -46,7 +46,7 @@
 
         <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && submitted }">
           <label>Name</label>
-          <input ng-disabled="loggedIn" type="text" name="name" class="form-control" ng-model="user.name"
+          <input ng-disabled="loggedIn" type="text" name="name" class="form-control" ng-model="order.name"
                  ng-required="{{!loggedIn}}"/>
 
           <p class="help-block" ng-show="form.name.$invalid && submitted">
@@ -72,7 +72,7 @@
           <input type="text" name="time" placeholder="Ex: 14:25..." class="form-control" ng-model="order.time" ng-pattern="/^(([0-1][0-9])|([2][0-3]))[:\.]([0-5][0-9])$/" required/>
 
           <p class="help-block" ng-show="form.time.$invalid && submitted">
-            Type a time in 24h format. Examples: 09:15, 14:00...
+            Type a time in 24h format. Examples: 09.15, 14:00... (use "." or ":" as a separator)
           </p>
         </div>
 
