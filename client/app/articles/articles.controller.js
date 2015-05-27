@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('ArticlesCtrl', function ($scope, $state, ArticlesSvc, UIHandler) {
+  .controller('ArticlesCtrl', function ($scope, $state, $http, ArticlesSvc, UIHandler) {
 
     $scope.selection = ArticlesSvc.selection;
     $scope.dishes = ArticlesSvc.dishes;
@@ -51,6 +51,14 @@ angular.module('faeloApp')
     $scope.DoOrder = function(){
       ArticlesSvc.setSelection();
       $state.go('orders');
+    };
+
+    $scope.Try = function(){
+      $http.get('/api/orders/5565a32c7bc230c54341bf52').success(function(){
+        console.log(arguments);
+      }).error(function(){
+        console.log(arguments);
+      })
     };
 
 });

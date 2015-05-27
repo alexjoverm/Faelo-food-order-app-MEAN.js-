@@ -3,33 +3,81 @@
 var _ = require('lodash');
 var Order = require('./order.model');
 var OrderLine = require('./orderLine.model');
+var config = require('../../config/environment');
 
 
 // Get list of orders
 exports.index = function(req, res) {
-  Order.find({}).limit(200).sort('-created_at').exec(function (err, orders) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, orders);
-  });
+
+  if(config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf('manager'))
+    Order.find({}).limit(200).sort('-created_at').exec(function (err, orders) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, orders);
+    });
+  else
+    res.json(403, 'Forbidden');
+
 };
 
 // Get a single order
 exports.show = function(req, res) {
-  Order.findById(req.params.id).populate('_user').populate('_items').exec(function (err, order) {
-    if(err) { return handleError(res, err); }
-    if(!order) { return res.send(404); }
 
-    var options = {
-      path: '_items._item',
-      model: 'Article'
-    };
+  console.log('SHOW!')
 
-    Order.populate(order, options, function (err, result) {
+  // If it is manager or admin, go on
+  if(config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf('manager'))
+    Order.findById(req.params.id).populate('_user').populate('_items').exec(function (err, order) {
       if(err) { return handleError(res, err); }
-      return res.json(200, result);
+      if(!order) { return res.send(404); }
+
+      var options = {
+        path: '_items._item',
+        model: 'Article'
+      };
+
+      Order.populate(order, options, function (err, result) {
+        if(err) { return handleError(res, err); }
+        return res.json(200, result);
+      });
     });
-  });
+  else // If it is a user, check if it is itself
+    Order.findById(req.params.id).populate('_user').populate('_items').exec(function (err, order) {
+      if(err) { return handleError(res, err); }
+      if(!order._user || String(order._user._id) != String(req.user._id)) { return res.send(403); }
+      if(!order) { return res.send(404); }
+
+      var options = {
+        path: '_items._item',
+        model: 'Article'
+      };
+
+      Order.populate(order, options, function (err, result) {
+        if(err) { return handleError(res, err); }
+        return res.json(200, result);
+      });
+    });
 };
+
+
+// Get orders of a user
+exports.showPerUser = function(req, res) {
+
+  console.log('SHOW PER USER!')
+
+  // If it is manager or admin, go on
+  if(config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf('manager'))
+    Order.find({}).limit(200).sort('-created_at').exec(function (err, orders) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, orders);
+    });
+  else// If it is a user, check if it is itself
+    Order.find({}).limit(200).sort('-created_at').exec(function (err, orders) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, orders);
+    });
+};
+
+
 
 // Creates a new order in the DB.
 exports.create = function(req, res) {
