@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth) {
+  .controller('SettingsCtrl', function ($scope, $http, User, Auth) {
     $scope.errors = {};
     $scope.currentUser = Auth.getCurrentUser();
     $scope.messageName = {};
@@ -33,6 +33,12 @@ angular.module('faeloApp')
           $scope.messageName.class = 'text-danger';
         });
       }
-    }
+    };
+
+    $http.get('/api/orders/me/all').success(function(orders) {
+      for (var i in orders)
+        orders[i].date = new Date(orders[i].date);
+      $scope.orders = orders;
+    });
 
   });

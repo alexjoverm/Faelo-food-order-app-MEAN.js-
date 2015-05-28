@@ -28,8 +28,9 @@ angular.module('faeloApp')
        * @param {Array} array
        * @param {Function} cb
        */
-      syncUpdates: function (modelName, array, cb) {
+      syncUpdates: function (modelName, array, cb, date) {
         cb = cb || angular.noop;
+        date = date || null;
 
         /**
          * Syncs item creation/updates on 'model:save'
@@ -38,6 +39,10 @@ angular.module('faeloApp')
           var oldItem = _.find(array, {_id: item._id});
           var index = array.indexOf(oldItem);
           var event = 'created';
+
+          if(date)
+            if(typeof item[date] == 'string')
+              item[date] = new Date(item[date]);
 
           // replace oldItem if it exists
           // otherwise just add item to the collection

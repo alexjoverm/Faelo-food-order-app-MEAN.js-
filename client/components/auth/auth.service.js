@@ -28,6 +28,7 @@ angular.module('faeloApp')
           $cookieStore.put('token', data.token);
           currentUser = User.get();
           deferred.resolve(data);
+          $rootScope.$broadcast('auth:login');
           return cb();
         }).
         error(function(err) {
@@ -47,6 +48,7 @@ angular.module('faeloApp')
       logout: function() {
         $cookieStore.remove('token');
         currentUser = {};
+        $rootScope.$broadcast('auth:logout');
       },
 
       /**

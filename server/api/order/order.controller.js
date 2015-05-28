@@ -66,15 +66,24 @@ exports.showPerUser = function(req, res) {
 
   // If it is manager or admin, go on
   if(config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf('manager'))
-    Order.find({}).limit(200).sort('-created_at').exec(function (err, orders) {
+    Order.find({ _user: req.params.userId }).limit(200).sort('-created_at').exec(function (err, orders) {
       if(err) { return handleError(res, err); }
       return res.json(200, orders);
     });
-  else// If it is a user, check if it is itself
-    Order.find({}).limit(200).sort('-created_at').exec(function (err, orders) {
-      if(err) { return handleError(res, err); }
-      return res.json(200, orders);
-    });
+  else// Not allowed
+    return res.json(403);
+};
+
+
+exports.showMine= function(req, res) {
+
+  console.log('SHOW MINE!')
+
+  // If it is manager or admin, go on
+  Order.find({ _user: req.user._id }).limit(200).sort('-created_at').exec(function (err, orders) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, orders);
+  });
 };
 
 

@@ -65,6 +65,11 @@
 
     <div class="col-sm-6">
       <h3 class="text-center">Your orders</h3>
+      <div class="order-user" ng-repeat="order in orders">
+        <p>{{order.date}}</p>
+        <p>{{order.time}}</p>
+        <p>{{order.price}}</p>
+      </div>
     </div>
 
 
