@@ -1,10 +1,23 @@
 'use strict';
 
 angular.module('faeloApp')
-  .controller('SettingsCtrl', function ($scope, $http, User, Auth) {
+  .controller('SettingsCtrl', function ($scope, $http, User, Auth, UIHandler) {
     $scope.errors = {};
     $scope.currentUser = Auth.getCurrentUser();
     $scope.messageName = {};
+
+    $scope.reverse = false;
+    $scope.predicate = '';
+    $scope.oldPredicate = '';
+
+    $scope.order = function(predicate){
+      $scope.oldPredicate = $scope.predicate;
+      $scope.predicate = predicate;
+      if($scope.oldPredicate == $scope.predicate)
+        $scope.reverse = !$scope.reverse;
+      else
+        $scope.reverse = false;
+    };
 
     $scope.changePassword = function(form) {
       $scope.submitted = true;
@@ -33,6 +46,13 @@ angular.module('faeloApp')
           $scope.messageName.class = 'text-danger';
         });
       }
+    };
+
+    $scope.OpenDetail = function(order){
+      $http.get('/api/orders/' + order._id).success(function(order) {
+        UIHandler.DialogDetail('Order Detail', 'info', order);
+      });
+
     };
 
     $http.get('/api/orders/me/all').success(function(orders) {

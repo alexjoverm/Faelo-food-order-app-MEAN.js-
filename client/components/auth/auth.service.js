@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('faeloApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
+  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, $injector) {
     var currentUser = {};
     if($cookieStore.get('token')) {
       currentUser = User.get();
@@ -28,7 +28,6 @@ angular.module('faeloApp')
           $cookieStore.put('token', data.token);
           currentUser = User.get();
           deferred.resolve(data);
-          $rootScope.$broadcast('auth:login');
           return cb();
         }).
         error(function(err) {
@@ -48,7 +47,7 @@ angular.module('faeloApp')
       logout: function() {
         $cookieStore.remove('token');
         currentUser = {};
-        $rootScope.$broadcast('auth:logout');
+        $injector.get('OrdersSvc').cleanOrders();
       },
 
       /**

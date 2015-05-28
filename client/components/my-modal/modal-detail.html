@@ -1,0 +1,38 @@
+<div class="modal-header {{data.type}}">
+  <h4>
+    <i class="margin-right {{data.options.icon}}"></i>
+    {{data.header}}
+  </h4>
+  <a class="btn button-modal-close" ng-click="$dismiss()"><i class="fa fa-remove"></i></a>
+</div>
+
+<div class="modal-body">
+  <table class="table">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-class="{'dish-row': item._item.isSnack === false}" ng-repeat="item in data.item._items">
+      <td><i ng-class="{'fa-spoon': item._item.isSnack === true, 'fa-cutlery': item._item.isSnack === false}" class="fa"></i></td>
+      <td>{{item._item.title}}</td>
+      <td>{{item.amount}}</td>
+      <td>{{item._item.price | number:2}} €</td>
+      <td>{{item.amount * item._item.price | number:2}} €</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h4 class="total">Total: {{data.item.amount}} €</h4>
+</div>
+
+<div class="modal-footer">
+  <p class="text-center">
+    <button ng-repeat="button in data.buttons" class="btn" ng-class="button.class" ng-click="button.click($event)">{{button.text}}</button>
+  </p>
+</div>

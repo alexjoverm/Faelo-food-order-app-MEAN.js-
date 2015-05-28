@@ -19,7 +19,7 @@ angular.module('faeloApp')
       })
       .state('manager-orders', {
         url: '/manager-orders',
-        templateUrl: 'app/manager/manager-orders.html',
+        templateUrl: 'app/manager/_orders/manager-orders.html',
         controller: 'ManagerOrdersCtrl',
         authenticate: true,
         role: 'manager'

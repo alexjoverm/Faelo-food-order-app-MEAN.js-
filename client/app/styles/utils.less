@@ -40,3 +40,70 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+
+.make-checkbox(@tam: 24px; @mar: 6px; @cl: #fff; @bg-cl: #222; @bd-r: 0px;)
+{
+  /* <div class="squaredTwo">
+       <input type="checkbox" value="None" id="squaredTwo" name="check" />
+       <label for="squaredTwo"></label>
+   </div> */
+
+  width: @tam;
+  height: @tam;
+  display: inline-block;
+  margin: 0 10px;
+  position: relative;
+  background: @cl;
+  background: linear-gradient(top, @cl 0%, multiply(@cl, #333) 100%);
+  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+  border-radius: @bd-r;
+
+  input[type=checkbox] {
+    visibility: hidden;
+  }
+
+  label{
+    cursor: pointer;
+    position: absolute;
+    width: (@tam - @mar);
+    height: (@tam - @mar);
+    left: (@mar / 2);
+    top: (@mar / 2);
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+    border-radius: @bd-r;
+
+    background: @bg-cl;
+    background: -webkit-linear-gradient(top, @bg-cl 0%, multiply(@bg-cl, #222) 100%);
+    background: -moz-linear-gradient(top, @bg-cl 0%, multiply(@bg-cl, #222) 100%);
+    background: -o-linear-gradient(top, @bg-cl 0%, multiply(@bg-cl, #222) 100%);
+    background: -ms-linear-gradient(top, @bg-cl 0%, multiply(@bg-cl, #222) 100%);
+    background: linear-gradient(top, @bg-cl 0%, multiply(@bg-cl, #222) 100%);
+
+    &:after {
+      content: '';
+      width: 14px;
+      height: 7px;
+      position: absolute;
+      top: 4px;
+      left: 2px;
+      border: 3px solid #fcfff4;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg);
+
+
+    }
+
+    &:hover::after{
+      opacity: 0.3;
+    }
+  }
+
+  label.checked:after{
+    opacity: 1;
+  }
+}

@@ -1,35 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3 class="text-center">All orders</h3>
 
-
-<div class="container-fluid">
-  <section class="calendar col-sm-7">
-    <div ui-calendar="config.calendar" ng-model="dates" calendar="myCalendar"></div>
-  </section>
-
-
-
-  <section class="col-sm-5">
-    <p class="controls">
-      <a class="btn btn-primary" href="" ng-click="OpenArticleModal({}, 'add')"><i class="fa fa-plus"></i> New</a>
-      <a class="btn btn-warning" ng-class="{'active': config.mode == 'select'}" href="" ng-click="changeMode('select')"><i class="glyphicon glyphicon-screenshot"></i></a>
-      <a class="btn btn-danger" ng-class="{'active': config.mode == 'delete'}" href="" ng-click="changeMode('delete')"><i class="glyphicon glyphicon-trash"></i></a>
-
-      <span class="pull-right">
-        <a class="btn btn-default" ng-class="{'active': config.modeButton == 1}" href="" ng-click="changeModeButton(1)">Month</a>
-      </span>
-    </p>
-
-    <div class="manager-articles-container">
-      <div class="article-card" ng-repeat="article in articles | orderBy:'-'" ng-class="{'selected': article.selected}" ng-click="setSelected(article)">
-        <img src="/uploads/{{article.image}}" alt=""/>
-        <p class="price">{{article.price}} €</p>
-        <div class="caption">
-          <h4 class="title">{{article.title}}</h4>
-        </div>
-
-        <a class="btn btn-edit-card" href="" ng-click="OpenArticleModal(article, 'update')"><i class="fa fa-pencil"></i></a>
-      </div>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th><a href="" ng-click="order('')"><i class="fa fa-eraser"></i></a></th>
+          <th><a href="" ng-click="order('readed')">Readed</a></th>
+          <th><a href="" ng-click="order('date')"><i class="glyphicon glyphicon-calendar"></i> Date</a></th>
+          <th><a href="" ng-click="order('time')"><i class="glyphicon glyphicon-time"></i> Time</a></th>
+          <th><a href="" ng-click="order('amount')">Price</a></th>
+          <th><a href="" ng-click="order('_items.length')">Items</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-class="{'unreaded-row': order.readed === false}" ng-repeat="order in allOrders | orderBy:predicate:reverse">
+          <td></td>
+          <td><div class="my-checkbox">
+            <label ng-class="{'checked': order.readed === true}">
+              <input type="checkbox" ng-model="order.readed" ng-change="Update(order)"/>
+            </label>
+          </div></td>
+          <td ng-click="OpenDetail(order)">{{order.date | date:'dd/MM/yyyy'}}</td>
+          <td ng-click="OpenDetail(order)">{{order.time}}</td>
+          <td ng-click="OpenDetail(order)">{{order.amount}} €</td>
+          <td ng-click="OpenDetail(order)">{{order._items.length || 0}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
-  </section>
+
+    <div class="col-sm-6">
+
+    </div>
+  </div>
 </div>
 

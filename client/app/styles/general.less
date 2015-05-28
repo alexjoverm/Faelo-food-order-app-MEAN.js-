@@ -46,6 +46,10 @@ section.manager-articles{
   margin: 35px 0 40px 0;
 }
 
+.modal-body .total{
+  margin: 35px 0 0 0;
+}
+
 .form-control[readonly].input-datepicker{
   background: white;
   &:focus{
@@ -67,8 +71,18 @@ section.manager-articles{
   padding: 70px 0 40px 0;
 }
 
+.unreaded-row{
+  @cl-row: #f80;
+  background: screen(@cl-row, #eee);
+  border-left: 4px solid @cl-row;
+}
 
-
+.my-checkbox{
+  .make-checkbox;
+}
+.table > tbody > tr > td{
+  vertical-align: middle;
+}
 
 
 

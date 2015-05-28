@@ -65,11 +65,37 @@
 
     <div class="col-sm-6">
       <h3 class="text-center">Your orders</h3>
-      <div class="order-user" ng-repeat="order in orders">
-        <p>{{order.date}}</p>
-        <p>{{order.time}}</p>
-        <p>{{order.price}}</p>
-      </div>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><a href="" ng-click="order('')"><i class="fa fa-eraser"></i></a></th>
+            <th><a href="" ng-click="order('date')"><i class="glyphicon glyphicon-calendar"></i> Date</a></th>
+            <th><a href="" ng-click="order('time')"><i class="glyphicon glyphicon-time"></i> Time</a></th>
+            <th><a href="" ng-click="order('amount')">Price</a></th>
+            <th><a href="" ng-click="order('_items.length')">Items</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="order in orders | orderBy:predicate:reverse" ng-click="OpenDetail(order)">
+            <td></td>
+            <td>{{order.date | date:'dd/MM/yyyy'}}</td>
+            <td>{{order.time}}</td>
+            <td>{{order.amount}} €</td>
+            <td>{{order._items.length || 0}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!--<div class="order-user" ng-repeat="order in orders">-->
+        <!--<div>-->
+          <!--<span><i class="glyphicon glyphicon-calendar"></i> {{order.date | date:'dd/MM/yyyy'}}</span>-->
+          <!--<span><i class="glyphicon glyphicon-time"></i> {{order.time}}</span>-->
+        <!--</div>-->
+        <!--<div>-->
+          <!--<span>{{order.amount}} €</span>-->
+          <!--<span>{{order.items.length || 0}} items</span>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
 
 

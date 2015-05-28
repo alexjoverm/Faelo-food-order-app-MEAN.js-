@@ -41,9 +41,9 @@ exports.show = function(req, res) {
       });
     });
   else // If it is a user, check if it is itself
-    Order.findById(req.params.id).populate('_user').populate('_items').exec(function (err, order) {
+    Order.findById(req.params.id).populate('_items').exec(function (err, order) {
       if(err) { return handleError(res, err); }
-      if(!order._user || String(order._user._id) != String(req.user._id)) { return res.send(403); }
+      if(!order._user || String(order._user) != String(req.user._id)) { return res.send(403); }
       if(!order) { return res.send(404); }
 
       var options = {

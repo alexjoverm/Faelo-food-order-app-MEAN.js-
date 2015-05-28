@@ -9,38 +9,39 @@ angular.module('faeloApp')
 
     // Add today and tomorrow orders to the arrays
     var processOrderByDates = function(){
-      this.todayOrders = [];
-      this.tomorrowOrders = [];
+      returnObj.todayOrders = [];
+      returnObj.tomorrowOrders = [];
 
-      for(var i in this.allOrders){
-        this.allOrders[i].date = new Date (this.allOrders[i].date);
+      for(var i in returnObj.allOrders){
+        returnObj.allOrders[i].date = new Date (returnObj.allOrders[i].date);
 
-        if(this.allOrders[i].date.getTime() == today.getTime())
-          this.todayOrders.push(this.allOrders[i]);
-        else if(this.allOrders[i].date.getTime() == tomorrow.getTime())
-          this.tomorrowOrders.push(this.allOrders[i]);
+        if(returnObj.allOrders[i].date.getTime() == today.getTime())
+          returnObj.todayOrders.push(returnObj.allOrders[i]);
+        else if(returnObj.allOrders[i].date.getTime() == tomorrow.getTime())
+          returnObj.tomorrowOrders.push(returnObj.allOrders[i]);
       }
     };
 
     // Add or update item in the other arrays
     var socketsCallback = function(event, item){
+      console.log('Sockets callback');
       if(event == 'created'){
         if(item.date.getTime() == today.getTime())
-          this.todayOrders.push(item);
+          returnObj.todayOrders.push(item);
         else if(item.date.getTime() == tomorrow.getTime())
-          this.tomorrowOrders.push(item);
+          returnObj.tomorrowOrders.push(item);
       }
       else{
-        var itemInToday = _.find(this.todayOrders, {_id: item._id});
-        var itemInTomorrow = _.find(this.tomorrowOrders, {_id: item._id});
+        var itemInToday = _.find(returnObj.todayOrders, {_id: item._id});
+        var itemInTomorrow = _.find(returnObj.tomorrowOrders, {_id: item._id});
 
         if(itemInToday){
-          var index = this.todayOrders.indexOf(itemInToday);
-          this.todayOrders.splice(index, 1, item);
+          var index = returnObj.todayOrders.indexOf(itemInToday);
+          returnObj.todayOrders.splice(index, 1, item);
         }
         else if(itemInTomorrow){
-          var index = this.tomorrowOrders.indexOf(itemInTomorrow);
-          this.tomorrowOrders.splice(index, 1, item);
+          var index = returnObj.tomorrowOrders.indexOf(itemInTomorrow);
+          returnObj.tomorrowOrders.splice(index, 1, item);
         }
       }
     };
@@ -52,30 +53,29 @@ angular.module('faeloApp')
       tomorrowOrders: [],
 
       loadOrders: function(){
-        Auth.isLoggedInAsync(function(loggedIn) {
-          if(loggedIn && Auth.isManager()){
-            $http.get('/api/orders/').success(function(orders) {
-              this.allOrders = orders;
-              processOrderByDates();
-              $rootScope.$broadcast('OrdersSvc:ordersLoaded');
-            });
-          }
-        });
+        if(returnObj.allOrders.length == 0)
+          Auth.isLoggedInAsync(function(loggedIn) {
+            if(loggedIn && Auth.isManager()){
+              $http.get('/api/orders/').success(function(orders) {
+                returnObj.allOrders = orders;
+                processOrderByDates();
+                $rootScope.$broadcast('OrdersSvc:ordersLoaded');
+                socket.syncUpdates('order', returnObj.allOrders, socketsCallback, 'date');
+              });
+            }
+          });
       },
 
       cleanOrders: function(){
-        this.allOrders = [];
-        this.todayOrders = [];
-        this.tomorrowOrders = [];
+        returnObj.allOrders = [];
+        returnObj.todayOrders = [];
+        returnObj.tomorrowOrders = [];
       }
     };
 
-    $rootScope.$on('auth:logout', this.cleanOrders);
-    $rootScope.$on('auth:login', this.loadOrders);
-
-    socket.syncUpdates('order', this.allOrders, socketsCallback, 'date');
 
 
+    returnObj.loadOrders();
 
     return returnObj
 

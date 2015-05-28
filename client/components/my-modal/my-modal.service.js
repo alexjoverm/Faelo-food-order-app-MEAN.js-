@@ -106,5 +106,29 @@ angular.module('faeloApp').factory('UIHandler', ['$modal', function($modal){
     });
   };
 
+  uiHandler.DialogDetail = function(header, type, item, options){
+
+    var options = SetOptions(options, type, 'components/my-modal/modal-detail.html');
+
+    console.log(item)
+
+    var modalInstance = $modal.open({
+      templateUrl: options.template_name,
+      controller: 'ModalArticleCtrl',
+      backdrop: options.backdrop,
+      size: options.size,
+      resolve: { data: function(){
+        return{
+          header: header, type: type , item: item, options: options,
+          buttons: [{
+            class: 'btn-default',
+            text: 'OK',
+            click: function(e) { modalInstance.dismiss(e); }
+          }]
+        };
+      }}
+    });
+  };
+
   return uiHandler;
 }]);
