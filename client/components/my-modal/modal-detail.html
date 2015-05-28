@@ -7,6 +7,21 @@
 </div>
 
 <div class="modal-body">
+
+
+  <div class="user" ng-show="data.item._user && data.item._user.name">
+    <h3>User</h3>
+    <div class="user-info-modal clearfix">
+      <img ng-show="data.item._user.image" ng-src="{{data.item._user.image}}" alt="{{data.item._user.name}}"/>
+      <div ng-class="{'with-image': data.item._user.image}">
+        <h4>{{data.item._user.name}}</h4>
+        <p>{{data.item._user.email}}</p>
+      </div>
+    </div>
+    <hr/>
+  </div>
+
+  <h3 class="text-center">Items</h3>
   <table class="table">
     <thead>
     <tr>

@@ -53,12 +53,5 @@ angular.module('faeloApp')
       $state.go('orders');
     };
 
-    $scope.Try = function(){
-      $http.get('/api/orders/5565a32c7bc230c54341bf52').success(function(){
-        console.log(arguments);
-      }).error(function(){
-        console.log(arguments);
-      })
-    };
 
 });

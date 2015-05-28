@@ -1,21 +1,84 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-6">
+
+    <div class="col-sm-6 col-sm-push-6">
+
+      <div class="side-orders" ng-hide="day">
+        <h3>Today</h3>
+        <button type="button" class="btn btn-danger" ng-click="day=1">Tomorrow</button>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th><a href="" ng-click="order('', 1)"><i class="fa fa-eraser"></i></a></th>
+            <th><a href="" ng-click="order('readed', 1)">Readed</a></th>
+            <th><a href="" ng-click="order('time', 1)"><i class="glyphicon glyphicon-time"></i> Time</a></th>
+            <th><a href="" ng-click="order('amount', 1)">Price</a></th>
+            <th><a href="" ng-click="order('_items.length', 1)">Items</a></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-class="{'unreaded-row': order.readed === false}" ng-repeat="order in todayOrders | orderBy:predicate[1]:reverse[1]">
+            <td></td>
+            <td><div class="my-checkbox">
+              <label ng-class="{'checked': order.readed === true}">
+                <input type="checkbox" ng-model="order.readed" ng-change="Update(order)"/>
+              </label>
+            </div></td>
+            <td ng-click="OpenDetail(order)">{{order.time}}</td>
+            <td ng-click="OpenDetail(order)">{{order.amount}} €</td>
+            <td ng-click="OpenDetail(order)">{{order._items.length || 0}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="side-orders" ng-show="day">
+        <h3>Tomorrow</h3>
+        <button type="button" class="btn btn-danger" ng-click="day=0">Today</button>
+
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th><a href="" ng-click="order('', 1)"><i class="fa fa-eraser"></i></a></th>
+            <th><a href="" ng-click="order('readed', 1)">Readed</a></th>
+            <th><a href="" ng-click="order('time', 1)"><i class="glyphicon glyphicon-time"></i> Time</a></th>
+            <th><a href="" ng-click="order('amount', 1)">Price</a></th>
+            <th><a href="" ng-click="order('_items.length', 1)">Items</a></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-class="{'unreaded-row': order.readed === false}" ng-repeat="order in tomorrowOrders | orderBy:predicate[1]:reverse[1]">
+            <td></td>
+            <td><div class="my-checkbox">
+              <label ng-class="{'checked': order.readed === true}">
+                <input type="checkbox" ng-model="order.readed" ng-change="Update(order)"/>
+              </label>
+            </div></td>
+            <td ng-click="OpenDetail(order)">{{order.time}}</td>
+            <td ng-click="OpenDetail(order)">{{order.amount}} €</td>
+            <td ng-click="OpenDetail(order)">{{order._items.length || 0}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-sm-pull-6">
       <h3 class="text-center">All orders</h3>
 
       <table class="table table-hover">
         <thead>
         <tr>
-          <th><a href="" ng-click="order('')"><i class="fa fa-eraser"></i></a></th>
-          <th><a href="" ng-click="order('readed')">Readed</a></th>
-          <th><a href="" ng-click="order('date')"><i class="glyphicon glyphicon-calendar"></i> Date</a></th>
-          <th><a href="" ng-click="order('time')"><i class="glyphicon glyphicon-time"></i> Time</a></th>
-          <th><a href="" ng-click="order('amount')">Price</a></th>
-          <th><a href="" ng-click="order('_items.length')">Items</a></th>
+          <th><a href="" ng-click="order('', 0)"><i class="fa fa-eraser"></i></a></th>
+          <th><a href="" ng-click="order('readed', 0)">Readed</a></th>
+          <th><a href="" ng-click="order('date', 0)"><i class="glyphicon glyphicon-calendar"></i> Date</a></th>
+          <th><a href="" ng-click="order('time', 0)"><i class="glyphicon glyphicon-time"></i> Time</a></th>
+          <th><a href="" ng-click="order('amount', 0)">Price</a></th>
+          <th><a href="" ng-click="order('_items.length', 0)">Items</a></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-class="{'unreaded-row': order.readed === false}" ng-repeat="order in allOrders | orderBy:predicate:reverse">
+        <tr ng-class="{'unreaded-row': order.readed === false}" ng-repeat="order in allOrders | orderBy:predicate[0]:reverse[0]">
           <td></td>
           <td><div class="my-checkbox">
             <label ng-class="{'checked': order.readed === true}">
@@ -32,9 +95,7 @@
     </div>
 
 
-    <div class="col-sm-6">
 
-    </div>
   </div>
 </div>
 

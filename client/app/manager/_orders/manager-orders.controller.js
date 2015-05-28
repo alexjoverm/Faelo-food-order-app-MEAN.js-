@@ -3,6 +3,7 @@
 angular.module('faeloApp')
   .controller('ManagerOrdersCtrl', function ($scope, $http, UIHandler, OrdersSvc) {
 
+    /***** ORDERS *****/
     $scope.allOrders = OrdersSvc.allOrders;
     $scope.todayOrders = OrdersSvc.todayOrders;
     $scope.tomorrowOrders = OrdersSvc.tomorrowOrders;
@@ -17,20 +18,24 @@ angular.module('faeloApp')
     OrdersSvc.loadOrders();
 
 
-    $scope.reverse = false;
-    $scope.predicate = '';
-    $scope.oldPredicate = '';
+    /***** SORTING *****/
+    $scope.reverse = [false, false];
+    $scope.predicate = ['', ''];
+    $scope.oldPredicate = ['', ''];
 
-    $scope.order = function(predicate){
-      $scope.oldPredicate = $scope.predicate;
-      $scope.predicate = predicate;
-      if($scope.oldPredicate == $scope.predicate)
-        $scope.reverse = !$scope.reverse;
+    $scope.order = function(predicate, i){
+      $scope.oldPredicate[i] = $scope.predicate[i];
+      $scope.predicate[i] = predicate;
+      if($scope.oldPredicate[i] == $scope.predicate[i])
+        $scope.reverse[i] = !$scope.reverse[i];
       else
-        $scope.reverse = false;
+        $scope.reverse[i] = false;
     };
 
+    /****** TODAY & TOMORROW ******/
+    $scope.day = 0; //0: today, 1: tomorrow
 
+    /****** FUNCTIONS *****/
     $scope.Update = function(order){
       $http.put('/api/orders/' + order._id, order).success(function(){
         console.log('success');
