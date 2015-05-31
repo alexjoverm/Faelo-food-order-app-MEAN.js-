@@ -273,7 +273,7 @@ angular.module('faeloApp')
       $document.on('keyup', function(event){
         if(event.keyCode == 16){
           $scope.$apply(function(){ $scope.config.modeButton = 0; });
-        }
+        };
       });
 
       $document.on('keydown', function(event){

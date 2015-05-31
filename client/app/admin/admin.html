@@ -1,10 +1,33 @@
 
 <div class="container">
 
-  <tabset justified="true">
-    <tab ng-repeat="tab in tabs" heading="{{ tab.heading }}" active="tab.active">
-      <div ng-include="tab.template"></div>
-    </tab>
-  </tabset>
+  <table class="table users">
+    <thead>
+    <tr>
+      <th colspan="2">User</th>
+      <th>Email</th>
+      <th>Provider</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="user in users">
+      <td><img ng-show="user.image" src="{{user.image}}" alt=""/></td>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td><span class="provider {{user.provider}}"></span></td>
+      <td>
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-primary" ng-click="edit(user)"><span class="fa fa-pencil"></span></button>
+          <button type="button" class="btn btn-danger" ng-click="delete(user)"><span class="fa fa-trash-o"></span></button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+  <p class="text-center"><a class="btn btn-primary" href=""><i class="fa fa-plus"></i> Add user</a></p>
 
 </div>

@@ -51,17 +51,25 @@ angular.module('faeloApp')
       allOrders: [],
       todayOrders: [],
       tomorrowOrders: [],
+      loaded: false,
+      loading: false,
 
       loadOrders: function(){
-        if(returnObj.allOrders.length == 0)
           Auth.isLoggedInAsync(function(loggedIn) {
             if(loggedIn && Auth.isManager()){
-              $http.get('/api/orders/').success(function(orders) {
-                returnObj.allOrders = orders;
-                processOrderByDates();
-                $rootScope.$broadcast('OrdersSvc:ordersLoaded');
-                socket.syncUpdates('order', returnObj.allOrders, socketsCallback, 'date');
-              });
+              if(!returnObj.loading){
+                returnObj.loading = true;
+                $http.get('/api/orders/').success(function(orders) {
+                  returnObj.allOrders = orders;
+                  processOrderByDates();
+                  $rootScope.$broadcast('OrdersSvc:ordersLoaded');
+                  if(!returnObj.loaded){
+                    socket.syncUpdates('order', returnObj.allOrders, socketsCallback, 'date');
+                    returnObj.loaded = true;
+                  }
+                });
+              }
+
             }
           });
       },
