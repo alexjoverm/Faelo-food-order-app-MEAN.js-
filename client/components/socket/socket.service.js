@@ -32,14 +32,12 @@ angular.module('faeloApp')
         cb = cb || angular.noop;
         date = date || null;
 
-        console.log('SYNC ' + modelName);
 
         /**
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function (item) {
 
-          console.log('ONN');
 
           var oldItem = _.find(array, {_id: item._id});
           var index = array.indexOf(oldItem);

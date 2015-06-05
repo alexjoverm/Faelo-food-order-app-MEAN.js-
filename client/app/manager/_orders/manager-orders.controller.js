@@ -38,7 +38,7 @@ angular.module('faeloApp')
     /****** FUNCTIONS *****/
     $scope.Update = function(order){
       $http.put('/api/orders/' + order._id, order).success(function(){
-        console.log('success');
+        //console.log('success');
       });
     };
 

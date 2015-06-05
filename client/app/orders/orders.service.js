@@ -24,7 +24,6 @@ angular.module('faeloApp')
 
     // Add or update item in the other arrays
     var socketsCallback = function(event, item){
-      console.log('Sockets callback');
       if(event == 'created'){
         if(item.date.getTime() == today.getTime())
           returnObj.todayOrders.push(item);
@@ -51,25 +50,24 @@ angular.module('faeloApp')
       allOrders: [],
       todayOrders: [],
       tomorrowOrders: [],
+      prom: null,
       loaded: false,
-      loading: false,
 
       loadOrders: function(){
           Auth.isLoggedInAsync(function(loggedIn) {
             if(loggedIn && Auth.isManager()){
-              if(!returnObj.loading){
-                returnObj.loading = true;
-                $http.get('/api/orders/').success(function(orders) {
+              if(!returnObj.prom || returnObj.prom.$$state.status === 0 || returnObj.allOrders.length === 0) {
+                returnObj.prom = $http.get('/api/orders/');
+                returnObj.prom.success(function (orders) {
                   returnObj.allOrders = orders;
                   processOrderByDates();
                   $rootScope.$broadcast('OrdersSvc:ordersLoaded');
-                  if(!returnObj.loaded){
+                  if (!returnObj.loaded) {
                     socket.syncUpdates('order', returnObj.allOrders, socketsCallback, 'date');
                     returnObj.loaded = true;
                   }
                 });
               }
-
             }
           });
       },

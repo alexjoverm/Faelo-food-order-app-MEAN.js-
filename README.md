@@ -102,7 +102,24 @@ Now we should have around 700MB free.
 
 **Note**: by default, OpenShift have disabled preallocations. There is no need to change the `mongodb.conf` file
 
+## 1.2 How to create and deploy
 
+- 1. Run the angular generator `yo angular-fullstack YOUR_APP_NAME`
+- 2. Create the app on Openshift, running `yo angular-fullstack:openshift YOUR_APP_NAME`
+- 3. If you have an existing app, replace the `client` and `server` folders, and change the appName in your `Gruntfile.js, line 313`
+- 4. Run `grunt build` and `grunt buildcontrol:openshift`
 
+Additionally, add the environment variables:
+
+```
+rhc set-env TWITTER_ID=id -a APP_NAME
+rhc set-env TWITTER_SECRET=secret -a APP_NAME
+
+rhc set-env FACEBOOK_ID=id -a APP_NAME
+rhc set-env FACEBOOK_SECRET=secret -a APP_NAME
+
+rhc set-env GOOGLE_ID=id -a APP_NAME
+rhc set-env GOOGLE_SECRET=secret -a APP_NAME
+```
 
 
