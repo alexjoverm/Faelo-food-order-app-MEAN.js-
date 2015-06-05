@@ -43,6 +43,9 @@ Here I'll write the commands I've found out and the steps for creating the app.
 * `rhc show-app APP_NAME`: display info about the app
 * `rhc show-app APP_NAME --gears quota`: display info about the quota used by the app
 
+**App debug**:
+* `rhc tail -a APP_NAME`
+
 **App management**:
 * `rhc app tidy APP_NAME`: runs a clean-up
 * `rhc app restart -a APP_NAME`
@@ -111,7 +114,7 @@ Now we should have around 700MB free.
 
 Additionally, add the environment variables:
 
-```
+``
 rhc set-env TWITTER_ID=id -a APP_NAME
 rhc set-env TWITTER_SECRET=secret -a APP_NAME
 
