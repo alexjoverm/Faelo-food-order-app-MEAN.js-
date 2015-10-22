@@ -1,3 +1,17 @@
+# Faelo
+
+Faelo app is a full-stack system build in MEAN.js which aim is to offer a customer a range of food products to order. Then the customer can choose and order a menu build on its own.
+
+The main features are:
+* Complete guideance on the UI for the ordering proccess
+* 3 different roles:
+ * *Admin*: Can administrate users, modify and delete them
+ * *Manager*: Can process the orders received in Real time, view a history, add new dishes and new snacks, assign them to dates... and more
+ * *User*: Can edit a profile used for automatically complete inputs in orders. Also view a orders history.
+ * *Guest* (not logged): Same as User, but with none of the mentioned features 
+* Use of Socket.io for Real time features
+* Custom angularjs directives
+
 # MEANJS stack
 
 I've stopped MEAN.io development (it was at the beginning, so lucky me) because some reasons:
